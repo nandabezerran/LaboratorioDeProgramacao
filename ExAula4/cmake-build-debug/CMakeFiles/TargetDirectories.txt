@@ -1,0 +1,3 @@
+C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/ExAula4/cmake-build-debug/CMakeFiles/ExAula4.dir
+C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/ExAula4/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/ExAula4/cmake-build-debug/CMakeFiles/rebuild_cache.dir
