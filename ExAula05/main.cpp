@@ -51,7 +51,6 @@ int main() {
     int vector[] = {2,9,6,3,5,4,8,1,7};
     int *init = vector;
     int *fin = vector + 8;
-    int *pivot = vector + 4;
 
     std::cout << "InitialVector:   ";
     PrintVector(vector);
