@@ -40,8 +40,8 @@ void HoareSelection (int *init, int *fin, int *iPivot){
 }
 
 int* BFPRT(int *init, int *fin, int vectorSize, int *pivot){
-    int qtdOfPartitions = vectorSize/5;
-    int *medians[qtdOfPartitions];
+    int qtdOfPartitions = vectorSize/5 + (vectorSize % 5 != 0);
+    int medians[qtdOfPartitions];
     int *auxInit = init;
     int *auxFin = init + 4;
     int *middle;
@@ -50,18 +50,18 @@ int* BFPRT(int *init, int *fin, int vectorSize, int *pivot){
         if((auxInit + 5) >= fin){
             middle = auxInit + ((fin - auxInit)/2);
             HoareSelection(auxInit, fin, middle);
-            medians[i] = middle;
+            medians[i] = *middle;
         }
         else{
             middle = auxInit + ((auxFin - auxInit)/2);
             HoareSelection(auxInit, auxFin, middle);
-            medians[i] = middle;
+            medians[i] = *middle;
         }
         auxInit = auxInit + 5;
         auxFin = auxFin + 5;
     }
-    pivot = medians[qtdOfPartitions/2];
-    HoareSelection(medians[0], medians[qtdOfPartitions], pivot);
+    pivot = medians + qtdOfPartitions/2;
+    HoareSelection(medians, medians + qtdOfPartitions, pivot);
     return pivot;
 
 }
@@ -91,7 +91,7 @@ void QuickSort(int *init, int *fin, int *pivot, int vectorSize){
 }
 
 void PrintVector(int *vector){
-    for (int i = 0; i < 9 ; ++i) {
+    for (int i = 0; i < 8 ; ++i) {
         std::cout << vector[i] << " ";
     }
     std::cout << std::endl;
@@ -100,9 +100,9 @@ void PrintVector(int *vector){
 int main() {
     int* pivot;
     int vector[] = {6, 5, 8, 2, 4, 1, 7, 3};
-    int vectorSize = 7;
+    int vectorSize = 8;
     int *init = vector;
-    int *fin = vector + 6 ;
+    int *fin = vector + 7 ;
     BFPRT(init, fin, vectorSize, pivot);
     PrintVector(vector);
     return 0;
