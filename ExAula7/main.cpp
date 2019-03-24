@@ -1,5 +1,5 @@
 #include <iostream>
-#define vectorSize = 9;
+
 void Swap(int *p, int *p_){
     int aux;
     aux = *p;
