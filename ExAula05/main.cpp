@@ -8,8 +8,7 @@ void Swap(int *p, int *p_){
 }
 
 int* LomutoPartitioning (int *init, int *fin){
-    int middlePosition = static_cast<int>((fin - init)/sizeof(int));
-    int *pivot = init + middlePosition;
+    int *pivot = init + ((fin - init)/2);
     Swap(init, pivot);
 
     int *i = init;
@@ -23,7 +22,6 @@ int* LomutoPartitioning (int *init, int *fin){
     }
     Swap(i, init);
     pivot = i;
-    std::cout << "Pivot: " << *pivot << std::endl;
     return pivot;
 
 
@@ -39,12 +37,21 @@ void PrintVector(int *vector){
 
 void QuickSortWithoutTailRecursion(int *init, int *fin){
     int *pivot;
-    while (init <= fin){
-        pivot = LomutoPartitioning(init, fin);
 
-        QuickSortWithoutTailRecursion(init, pivot -1);
+    pivot = LomutoPartitioning(init, fin);
+    if(pivot != init || pivot == fin){
+        QuickSortWithoutTailRecursion(init, pivot - 1);
+    }
 
-        init = pivot + 1;
+    if(pivot == init || pivot != fin ){
+        for (int *j = pivot+1; j <= fin; j++ ){
+            for (int *i = pivot+1; i <= fin ; i++) {
+                if(*j < *i){
+                    Swap(j,i);
+                }
+            }
+        }
+
     }
 }
 int main() {
