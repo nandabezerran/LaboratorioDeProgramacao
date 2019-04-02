@@ -8,16 +8,14 @@
 
 C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortIndex.h
 
-C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortPointer.cpp
-QuickSortPointer.h
-C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortPointer.h
-iostream
--
-
 C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortPointer.h
 
 C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/main.cpp
 iostream
+-
+time.h
+-
+stdlib.h
 -
 QuickSortIndex.h
 C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortIndex.h

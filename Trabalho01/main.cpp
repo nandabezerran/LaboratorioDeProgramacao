@@ -1,4 +1,6 @@
 #include <iostream>
+#include <time.h>
+#include <stdlib.h>
 #include "QuickSortIndex.h"
 #include "QuickSortPointer.h"
 
@@ -10,12 +12,23 @@
 //TODO Function to create aleatory vectors
 
 
+int* AleatoryVector(int* vector, int size){
+    srand((unsigned)time(nullptr));
+    for (int i = 0; i < size; ++i) {
+        vector[i] = rand() % 100;
+    }
 
+    return vector;
+
+}
 
 int main() {
-    int vector[] = {2,9,7,3,5,4,8,1,7};
-    int *init = vector;
-    int *fin = vector + 8;
+    int size;
+    std::cout << "Whats the size of the vector? " << std::endl;
+    std::cin >> size ;
+    int vector[size];
+    int *init = AleatoryVector(vector, size);
+    int *fin = vector + (size - 1);
     QuickSortIndex qSortI;
     QuickSortPointer qSortP;
     std::cout << "InitialVector:   ";
