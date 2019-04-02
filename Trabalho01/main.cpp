@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "QuickSortIndex.h"
 #include "QuickSortPointer.h"
-
+#include "QuickSortRandomPivot.h"
 //TODO Quicksort with index
 //TODO Quicksort with pointers
 //TODO Quicksort memory
@@ -31,11 +31,12 @@ int main() {
     int *fin = vector + (size - 1);
     QuickSortIndex qSortI;
     QuickSortPointer qSortP;
+    QuickSortRandomPivot qSortRp;
     std::cout << "InitialVector:   ";
-    qSortP.PrintVector_(vector, fin);
-    qSortP.QuickSort_(init, fin);
+    qSortRp.PrintVector_(vector, fin);
+    qSortRp.QuickSort_(init, fin);
     std::cout << "After QuickSort: ";
-    qSortP.PrintVector_(vector, fin);
+    qSortRp.PrintVector_(vector, fin);
 
     return 0;
 }

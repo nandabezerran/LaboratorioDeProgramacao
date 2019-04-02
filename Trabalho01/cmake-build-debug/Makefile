@@ -176,6 +176,33 @@ QuickSortPointer.cpp.s:
 	$(MAKE) -f CMakeFiles\Trabalho01.dir\build.make CMakeFiles/Trabalho01.dir/QuickSortPointer.cpp.s
 .PHONY : QuickSortPointer.cpp.s
 
+QuickSortRandomPivot.obj: QuickSortRandomPivot.cpp.obj
+
+.PHONY : QuickSortRandomPivot.obj
+
+# target to build an object file
+QuickSortRandomPivot.cpp.obj:
+	$(MAKE) -f CMakeFiles\Trabalho01.dir\build.make CMakeFiles/Trabalho01.dir/QuickSortRandomPivot.cpp.obj
+.PHONY : QuickSortRandomPivot.cpp.obj
+
+QuickSortRandomPivot.i: QuickSortRandomPivot.cpp.i
+
+.PHONY : QuickSortRandomPivot.i
+
+# target to preprocess a source file
+QuickSortRandomPivot.cpp.i:
+	$(MAKE) -f CMakeFiles\Trabalho01.dir\build.make CMakeFiles/Trabalho01.dir/QuickSortRandomPivot.cpp.i
+.PHONY : QuickSortRandomPivot.cpp.i
+
+QuickSortRandomPivot.s: QuickSortRandomPivot.cpp.s
+
+.PHONY : QuickSortRandomPivot.s
+
+# target to generate assembly for a file
+QuickSortRandomPivot.cpp.s:
+	$(MAKE) -f CMakeFiles\Trabalho01.dir\build.make CMakeFiles/Trabalho01.dir/QuickSortRandomPivot.cpp.s
+.PHONY : QuickSortRandomPivot.cpp.s
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -218,6 +245,9 @@ help:
 	@echo ... QuickSortPointer.obj
 	@echo ... QuickSortPointer.i
 	@echo ... QuickSortPointer.s
+	@echo ... QuickSortRandomPivot.obj
+	@echo ... QuickSortRandomPivot.i
+	@echo ... QuickSortRandomPivot.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

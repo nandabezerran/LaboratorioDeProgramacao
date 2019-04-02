@@ -7,7 +7,11 @@ CMakeFiles/Trabalho01.dir/QuickSortIndex.cpp.obj: ../QuickSortIndex.h
 CMakeFiles/Trabalho01.dir/QuickSortPointer.cpp.obj: ../QuickSortPointer.cpp
 CMakeFiles/Trabalho01.dir/QuickSortPointer.cpp.obj: ../QuickSortPointer.h
 
+CMakeFiles/Trabalho01.dir/QuickSortRandomPivot.cpp.obj: ../QuickSortRandomPivot.cpp
+CMakeFiles/Trabalho01.dir/QuickSortRandomPivot.cpp.obj: ../QuickSortRandomPivot.h
+
 CMakeFiles/Trabalho01.dir/main.cpp.obj: ../QuickSortIndex.h
 CMakeFiles/Trabalho01.dir/main.cpp.obj: ../QuickSortPointer.h
+CMakeFiles/Trabalho01.dir/main.cpp.obj: ../QuickSortRandomPivot.h
 CMakeFiles/Trabalho01.dir/main.cpp.obj: ../main.cpp
 
