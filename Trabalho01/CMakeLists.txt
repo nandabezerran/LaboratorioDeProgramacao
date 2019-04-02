@@ -3,4 +3,4 @@ project(Trabalho01)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Trabalho01 main.cpp QuickSortIndex.cpp QuickSortIndex.h QuickSortChoosingPivot.cpp QuickSortChoosingPivot.h)
+add_executable(Trabalho01 main.cpp QuickSortIndex.cpp QuickSortIndex.h QuickSortPointer.cpp QuickSortPointer.h)

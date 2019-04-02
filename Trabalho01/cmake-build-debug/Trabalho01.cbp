@@ -82,16 +82,16 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortChoosingPivot.cpp">
-			<Option target="Trabalho01"/>
-		</Unit>
-		<Unit filename="C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortChoosingPivot.h">
-			<Option target="Trabalho01"/>
-		</Unit>
 		<Unit filename="C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortIndex.cpp">
 			<Option target="Trabalho01"/>
 		</Unit>
 		<Unit filename="C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortIndex.h">
+			<Option target="Trabalho01"/>
+		</Unit>
+		<Unit filename="C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortPointer.cpp">
+			<Option target="Trabalho01"/>
+		</Unit>
+		<Unit filename="C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortPointer.h">
 			<Option target="Trabalho01"/>
 		</Unit>
 		<Unit filename="C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/main.cpp">

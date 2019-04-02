@@ -5,12 +5,15 @@
 #ifndef TRABALHO01_QUICKSORTINDEX_H
 #define TRABALHO01_QUICKSORTINDEX_H
 
-#include "QuickSortChoosingPivot.h"
 
-class QuickSortIndex : public QuickSortChoosingPivot {
+class QuickSortIndex {
 public:
     QuickSortIndex();
-    void QuickSort_(int init, int fin, int vector[]) override;
+    void QuickSort_(int init, int fin, int vector[]) ;
+    void PrintVector_(int vector[], int fin);
+    void Swap_(int p, int p_, int vector[]);
+    int LomutoPartitioning_ (int init, int fin, int pivot, int vector[]);
+    int ChoosePivot_(int first, int last) ;
 
 };
 

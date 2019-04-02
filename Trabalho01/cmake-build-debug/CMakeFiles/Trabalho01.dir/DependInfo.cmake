@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortChoosingPivot.cpp" "C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/cmake-build-debug/CMakeFiles/Trabalho01.dir/QuickSortChoosingPivot.cpp.obj"
   "C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortIndex.cpp" "C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/cmake-build-debug/CMakeFiles/Trabalho01.dir/QuickSortIndex.cpp.obj"
+  "C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortPointer.cpp" "C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/cmake-build-debug/CMakeFiles/Trabalho01.dir/QuickSortPointer.cpp.obj"
   "C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/main.cpp" "C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/cmake-build-debug/CMakeFiles/Trabalho01.dir/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

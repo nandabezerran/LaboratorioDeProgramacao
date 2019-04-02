@@ -122,33 +122,6 @@ Trabalho01/fast:
 	$(MAKE) -f CMakeFiles\Trabalho01.dir\build.make CMakeFiles/Trabalho01.dir/build
 .PHONY : Trabalho01/fast
 
-QuickSortChoosingPivot.obj: QuickSortChoosingPivot.cpp.obj
-
-.PHONY : QuickSortChoosingPivot.obj
-
-# target to build an object file
-QuickSortChoosingPivot.cpp.obj:
-	$(MAKE) -f CMakeFiles\Trabalho01.dir\build.make CMakeFiles/Trabalho01.dir/QuickSortChoosingPivot.cpp.obj
-.PHONY : QuickSortChoosingPivot.cpp.obj
-
-QuickSortChoosingPivot.i: QuickSortChoosingPivot.cpp.i
-
-.PHONY : QuickSortChoosingPivot.i
-
-# target to preprocess a source file
-QuickSortChoosingPivot.cpp.i:
-	$(MAKE) -f CMakeFiles\Trabalho01.dir\build.make CMakeFiles/Trabalho01.dir/QuickSortChoosingPivot.cpp.i
-.PHONY : QuickSortChoosingPivot.cpp.i
-
-QuickSortChoosingPivot.s: QuickSortChoosingPivot.cpp.s
-
-.PHONY : QuickSortChoosingPivot.s
-
-# target to generate assembly for a file
-QuickSortChoosingPivot.cpp.s:
-	$(MAKE) -f CMakeFiles\Trabalho01.dir\build.make CMakeFiles/Trabalho01.dir/QuickSortChoosingPivot.cpp.s
-.PHONY : QuickSortChoosingPivot.cpp.s
-
 QuickSortIndex.obj: QuickSortIndex.cpp.obj
 
 .PHONY : QuickSortIndex.obj
@@ -175,6 +148,33 @@ QuickSortIndex.s: QuickSortIndex.cpp.s
 QuickSortIndex.cpp.s:
 	$(MAKE) -f CMakeFiles\Trabalho01.dir\build.make CMakeFiles/Trabalho01.dir/QuickSortIndex.cpp.s
 .PHONY : QuickSortIndex.cpp.s
+
+QuickSortPointer.obj: QuickSortPointer.cpp.obj
+
+.PHONY : QuickSortPointer.obj
+
+# target to build an object file
+QuickSortPointer.cpp.obj:
+	$(MAKE) -f CMakeFiles\Trabalho01.dir\build.make CMakeFiles/Trabalho01.dir/QuickSortPointer.cpp.obj
+.PHONY : QuickSortPointer.cpp.obj
+
+QuickSortPointer.i: QuickSortPointer.cpp.i
+
+.PHONY : QuickSortPointer.i
+
+# target to preprocess a source file
+QuickSortPointer.cpp.i:
+	$(MAKE) -f CMakeFiles\Trabalho01.dir\build.make CMakeFiles/Trabalho01.dir/QuickSortPointer.cpp.i
+.PHONY : QuickSortPointer.cpp.i
+
+QuickSortPointer.s: QuickSortPointer.cpp.s
+
+.PHONY : QuickSortPointer.s
+
+# target to generate assembly for a file
+QuickSortPointer.cpp.s:
+	$(MAKE) -f CMakeFiles\Trabalho01.dir\build.make CMakeFiles/Trabalho01.dir/QuickSortPointer.cpp.s
+.PHONY : QuickSortPointer.cpp.s
 
 main.obj: main.cpp.obj
 
@@ -212,12 +212,12 @@ help:
 	@echo ... Trabalho01
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... QuickSortChoosingPivot.obj
-	@echo ... QuickSortChoosingPivot.i
-	@echo ... QuickSortChoosingPivot.s
 	@echo ... QuickSortIndex.obj
 	@echo ... QuickSortIndex.i
 	@echo ... QuickSortIndex.s
+	@echo ... QuickSortPointer.obj
+	@echo ... QuickSortPointer.i
+	@echo ... QuickSortPointer.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
