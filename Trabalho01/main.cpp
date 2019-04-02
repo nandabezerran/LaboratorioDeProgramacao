@@ -9,8 +9,8 @@
 //TODO Function to create aleatory vectors
 
 
-void PrintVector(int fin, int *vector){
-    for (int i = 0; i < fin ; ++i) {
+void PrintVector(int fin, int vector[]){
+    for (int i = 0; i <= fin ; ++i) {
         std::cout << vector[i] << " ";
     }
     std::cout << std::endl;

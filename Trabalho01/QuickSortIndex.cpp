@@ -7,7 +7,6 @@
 QuickSortIndex::QuickSortIndex() = default;
 
 void QuickSortIndex::QuickSort_(int init, int fin, int *vector) {
-
     int initR;
     int finL;
     int pivot;
@@ -17,7 +16,7 @@ void QuickSortIndex::QuickSort_(int init, int fin, int *vector) {
     }
 
     pivot = ChoosePivot_(init, fin);
-    LomutoPartitioning_(init, fin, pivot, vector);
+    pivot = LomutoPartitioning_(init, fin, pivot, vector);
 
     if(pivot != init || pivot == fin){
         finL = pivot - 1;
