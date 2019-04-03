@@ -27,6 +27,10 @@ time.h
 -
 stdlib.h
 -
+algorithm
+-
+chrono
+-
 QuickSortIndex.h
 C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortIndex.h
 QuickSortPointer.h

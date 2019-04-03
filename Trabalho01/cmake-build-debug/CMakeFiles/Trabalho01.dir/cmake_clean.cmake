@@ -4,6 +4,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Trabalho01.dir/QuickSortPointer.cpp.obj"
   "CMakeFiles/Trabalho01.dir/QuickSortRandomPivot.cpp.obj"
   "CMakeFiles/Trabalho01.dir/QuickSortBfprt.cpp.obj"
+  "CMakeFiles/Trabalho01.dir/QuickSortMemory.cpp.obj"
   "Trabalho01.pdb"
   "Trabalho01.exe"
   "Trabalho01.exe.manifest"

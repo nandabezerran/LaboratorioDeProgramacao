@@ -94,6 +94,12 @@
 		<Unit filename="C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortIndex.h">
 			<Option target="Trabalho01"/>
 		</Unit>
+		<Unit filename="C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortMemory.cpp">
+			<Option target="Trabalho01"/>
+		</Unit>
+		<Unit filename="C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortMemory.h">
+			<Option target="Trabalho01"/>
+		</Unit>
 		<Unit filename="C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortPointer.cpp">
 			<Option target="Trabalho01"/>
 		</Unit>

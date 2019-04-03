@@ -176,6 +176,33 @@ QuickSortIndex.cpp.s:
 	$(MAKE) -f CMakeFiles\Trabalho01.dir\build.make CMakeFiles/Trabalho01.dir/QuickSortIndex.cpp.s
 .PHONY : QuickSortIndex.cpp.s
 
+QuickSortMemory.obj: QuickSortMemory.cpp.obj
+
+.PHONY : QuickSortMemory.obj
+
+# target to build an object file
+QuickSortMemory.cpp.obj:
+	$(MAKE) -f CMakeFiles\Trabalho01.dir\build.make CMakeFiles/Trabalho01.dir/QuickSortMemory.cpp.obj
+.PHONY : QuickSortMemory.cpp.obj
+
+QuickSortMemory.i: QuickSortMemory.cpp.i
+
+.PHONY : QuickSortMemory.i
+
+# target to preprocess a source file
+QuickSortMemory.cpp.i:
+	$(MAKE) -f CMakeFiles\Trabalho01.dir\build.make CMakeFiles/Trabalho01.dir/QuickSortMemory.cpp.i
+.PHONY : QuickSortMemory.cpp.i
+
+QuickSortMemory.s: QuickSortMemory.cpp.s
+
+.PHONY : QuickSortMemory.s
+
+# target to generate assembly for a file
+QuickSortMemory.cpp.s:
+	$(MAKE) -f CMakeFiles\Trabalho01.dir\build.make CMakeFiles/Trabalho01.dir/QuickSortMemory.cpp.s
+.PHONY : QuickSortMemory.cpp.s
+
 QuickSortPointer.obj: QuickSortPointer.cpp.obj
 
 .PHONY : QuickSortPointer.obj
@@ -272,6 +299,9 @@ help:
 	@echo ... QuickSortIndex.obj
 	@echo ... QuickSortIndex.i
 	@echo ... QuickSortIndex.s
+	@echo ... QuickSortMemory.obj
+	@echo ... QuickSortMemory.i
+	@echo ... QuickSortMemory.s
 	@echo ... QuickSortPointer.obj
 	@echo ... QuickSortPointer.i
 	@echo ... QuickSortPointer.s
