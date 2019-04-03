@@ -4,16 +4,12 @@
 
 #ifndef TRABALHO01_QUICKSORTRANDOMPIVOT_H
 #define TRABALHO01_QUICKSORTRANDOMPIVOT_H
+#include "QuickSortPointer.h"
 
-
-class QuickSortRandomPivot {
+class QuickSortRandomPivot : public QuickSortPointer {
 public:
     QuickSortRandomPivot();
-    void QuickSort_(int *init, int *fin);
-    void PrintVector_(int* vector, int* fin);
-    void Swap_(int *p, int *p_);
-    void LomutoPartitioning_ (int *init, int *fin, int *&pivot);
-    int* ChoosePivot_(int* first, int* last) ;
+    int* ChoosePivot_(int* first, int* last) override;
 };
 
 

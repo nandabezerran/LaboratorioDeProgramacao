@@ -122,6 +122,33 @@ Trabalho01/fast:
 	$(MAKE) -f CMakeFiles\Trabalho01.dir\build.make CMakeFiles/Trabalho01.dir/build
 .PHONY : Trabalho01/fast
 
+QuickSortBfprt.obj: QuickSortBfprt.cpp.obj
+
+.PHONY : QuickSortBfprt.obj
+
+# target to build an object file
+QuickSortBfprt.cpp.obj:
+	$(MAKE) -f CMakeFiles\Trabalho01.dir\build.make CMakeFiles/Trabalho01.dir/QuickSortBfprt.cpp.obj
+.PHONY : QuickSortBfprt.cpp.obj
+
+QuickSortBfprt.i: QuickSortBfprt.cpp.i
+
+.PHONY : QuickSortBfprt.i
+
+# target to preprocess a source file
+QuickSortBfprt.cpp.i:
+	$(MAKE) -f CMakeFiles\Trabalho01.dir\build.make CMakeFiles/Trabalho01.dir/QuickSortBfprt.cpp.i
+.PHONY : QuickSortBfprt.cpp.i
+
+QuickSortBfprt.s: QuickSortBfprt.cpp.s
+
+.PHONY : QuickSortBfprt.s
+
+# target to generate assembly for a file
+QuickSortBfprt.cpp.s:
+	$(MAKE) -f CMakeFiles\Trabalho01.dir\build.make CMakeFiles/Trabalho01.dir/QuickSortBfprt.cpp.s
+.PHONY : QuickSortBfprt.cpp.s
+
 QuickSortIndex.obj: QuickSortIndex.cpp.obj
 
 .PHONY : QuickSortIndex.obj
@@ -239,6 +266,9 @@ help:
 	@echo ... Trabalho01
 	@echo ... edit_cache
 	@echo ... rebuild_cache
+	@echo ... QuickSortBfprt.obj
+	@echo ... QuickSortBfprt.i
+	@echo ... QuickSortBfprt.s
 	@echo ... QuickSortIndex.obj
 	@echo ... QuickSortIndex.i
 	@echo ... QuickSortIndex.s

@@ -55,7 +55,7 @@ void QuickSortPointer::LomutoPartitioning_(int *init, int *fin, int *&pivot) {
 }
 
 void QuickSortPointer::PrintVector_(int* vector, int* fin){
-    for (vector; vector !=fin ; ++vector) {
+    for (vector; vector <=fin ; ++vector) {
         std::cout << *vector << " ";
     }
     std::cout << std::endl;

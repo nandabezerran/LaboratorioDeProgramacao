@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortBfprt.cpp" "C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/cmake-build-debug/CMakeFiles/Trabalho01.dir/QuickSortBfprt.cpp.obj"
   "C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortIndex.cpp" "C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/cmake-build-debug/CMakeFiles/Trabalho01.dir/QuickSortIndex.cpp.obj"
   "C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortPointer.cpp" "C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/cmake-build-debug/CMakeFiles/Trabalho01.dir/QuickSortPointer.cpp.obj"
   "C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortRandomPivot.cpp" "C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/cmake-build-debug/CMakeFiles/Trabalho01.dir/QuickSortRandomPivot.cpp.obj"

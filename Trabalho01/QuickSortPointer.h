@@ -9,11 +9,11 @@
 class QuickSortPointer{
 public:
     QuickSortPointer();
-    void QuickSort_(int *init, int *fin);
+    virtual void QuickSort_(int *init, int *fin);
     void PrintVector_(int* vector, int* fin);
     void Swap_(int *p, int *p_);
     void LomutoPartitioning_ (int *init, int *fin, int *&pivot);
-    int* ChoosePivot_(int* first, int* last) ;
+    virtual int* ChoosePivot_(int* first, int* last);
 
 };
 
