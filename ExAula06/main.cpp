@@ -13,18 +13,16 @@ tuple<int*, int*> LomutoPartitioningWithTriplePartitioning (int *init, int *fin,
     Swap(init, pivot);
     int *i = init;
     int *j = init+1;
-    int *n = init;
-    int p;
+    int *m = init;
 
-    for (j; j <= fin; ++j) {
+    for (; j <= fin; ++j) {
         if(*j < *init){
-            n++;
-            p = *n;
-            *n = *j;
-
             i++;
-            *j = *i;
-            *i = p;
+            Swap(i,j);
+
+            m++;
+            Swap(m,i);
+
         }
 
         else if(*j == *init){
@@ -32,13 +30,13 @@ tuple<int*, int*> LomutoPartitioningWithTriplePartitioning (int *init, int *fin,
             Swap(i,j);
         }
     }
-    Swap(n, init);
+    Swap(m, init);
     pivot = i;
-    return make_tuple(n, i);
+    return make_tuple(m, i);
 }
 
 void PrintVector(int *vector){
-    for (int i = 0; i < 10 ; ++i) {
+    for (int i = 0; i < 15 ; ++i) {
         std::cout << vector[i] << " ";
     }
     std::cout << std::endl;
@@ -68,9 +66,9 @@ void QuickSort(int *init, int *fin, int *pivot){
     }
 }
 int main() {
-    int vector[] = {10, 2, 6, 8, 6 , 6, 3, 4, 6, 5};
+    int vector[] = {1, 2, 5, 2, 4, 20, 1, 3, 6, 5, 5, 4, 1, 2, 1};
     int *init = vector;
-    int *fin = vector + 9;
+    int *fin = vector + 14;
     int *pivot = vector + 4;
 
     std::cout << "Pivot: " << *pivot << std::endl;
