@@ -14,6 +14,7 @@ public:
     void QuickSort_(int *init, int *fin) override;
     tuple<int*, int*> LomutoTriplePartitioning_ (int *init, int *fin, int *&pivot);
     void HoareSelection(int *init, int *fin, int *iPivot);
+    void BFPRT(int *init, int *&i, int *fin);
 };
 
 
