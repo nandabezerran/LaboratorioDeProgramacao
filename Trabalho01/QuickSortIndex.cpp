@@ -6,7 +6,7 @@
 using namespace std;
 
 QuickSortIndex::QuickSortIndex() = default;
-
+int ChoosePivot_ (int primeiro, int ultimo);
 void QuickSortIndex::QuickSort_(int init, int fin, int *vector) {
     int initR;
     int finL;
@@ -37,11 +37,6 @@ void QuickSortIndex::Swap_(int p, int p_, int vector[]){
     aux = vector[p];
     vector[p] = vector[p_];
     vector[p_] = aux;
-}
-
-int QuickSortIndex::ChoosePivot_(int first, int last){
-    int pivot = (last + first)/2;
-    return pivot;
 }
 
 int QuickSortIndex::LomutoPartitioning_ (int init, int fin, int pivot, int vector[]){

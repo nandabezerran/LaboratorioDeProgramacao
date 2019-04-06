@@ -24,5 +24,6 @@ CMakeFiles/Trabalho01.dir/main.cpp.obj: ../QuickSortIndex.h
 CMakeFiles/Trabalho01.dir/main.cpp.obj: ../QuickSortMemory.h
 CMakeFiles/Trabalho01.dir/main.cpp.obj: ../QuickSortPointer.h
 CMakeFiles/Trabalho01.dir/main.cpp.obj: ../QuickSortRandomPivot.h
+CMakeFiles/Trabalho01.dir/main.cpp.obj: ../instancias_ruins_Quicksort.hpp
 CMakeFiles/Trabalho01.dir/main.cpp.obj: ../main.cpp
 

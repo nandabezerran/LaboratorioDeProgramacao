@@ -8,13 +8,14 @@
 #include "QuickSortRandomPivot.h"
 #include "QuickSortBfprt.h"
 #include "QuickSortMemory.h"
+#include "instancias_ruins_Quicksort.hpp"
+
+int ChoosePivot_(int first, int last){
+    int pivot = (last + first)/2;
+    return pivot;
+}
+
 using namespace std::chrono;
-//TODO Quicksort with index
-//TODO Quicksort with pointers
-//TODO Quicksort memory
-//TODO Quicksort median of meadians
-//TODO Quicksort aleatory pivot
-//TODO Function to create aleatory vectors
 
 int* AleatoryVector(int* vector, int size){
     srand((unsigned)time(nullptr));
@@ -39,21 +40,29 @@ int main() {
         std::cout << "Whats the size of the vector? " << std::endl;
         std::cin >> size;
         int vector[size];
-        int *init = AleatoryVector(vector, size);
-        int *fin = vector + (size - 1);
+        bool aux = false; //= escrever_instancia(vector,size);
+        if (aux) {
+            std::cout << "There's not enough memory " << std::endl;
+        }
+        else {
+            int* init = AleatoryVector(vector, size);
+            int* fin = init + size - 1;
 
-        std::cout << "InitialVector:   ";
-        qSortMemory.PrintVector_(vector, fin);
-        auto start = high_resolution_clock::now();
-        qSortMemory.QuickSort_(init, fin);
-        auto stop = high_resolution_clock::now();
-        std::cout << "After QuickSort: ";
-        qSortMemory.PrintVector_(vector, fin);
+            std::cout << "InitialVector:   ";
+            qSortP.PrintVector_(vector, fin);
+            auto start = high_resolution_clock::now();
+            qSortP.QuickSort_(init, fin);
+            auto stop = high_resolution_clock::now();
+            std::cout << "After QuickSort: ";
+            qSortP.PrintVector_(vector, fin);
 
-        auto duration = duration_cast<microseconds>(stop - start);
-        cout << "Time taken by function: "
-             << duration.count() << " microseconds" << endl;
+            auto duration = duration_cast<microseconds>(stop - start);
+            cout << "Time taken by function: "
+                 << duration.count() << " microseconds" << endl;
 
+            //delete init;
+            //delete fin;
+        }
         std::cout << "\nDo you want to enter another vector?\n   Press - Any number to continue"
                      "\n   Press - 0 to exit " << std::endl;
         std::cin >> option;
@@ -62,8 +71,6 @@ int main() {
         }
 
         free(vector);
-        delete init;
-        delete fin;
 
     }
 

@@ -13,7 +13,6 @@ public:
     void PrintVector_(int vector[], int fin);
     void Swap_(int p, int p_, int vector[]);
     int LomutoPartitioning_ (int init, int fin, int pivot, int vector[]);
-    int ChoosePivot_(int first, int last) ;
 
 };
 
