@@ -10,6 +10,7 @@ CMakeFiles/Trabalho01.dir/QuickSortIndex.cpp.obj: ../QuickSortIndex.h
 
 CMakeFiles/Trabalho01.dir/QuickSortMemory.cpp.obj: ../QuickSortMemory.cpp
 CMakeFiles/Trabalho01.dir/QuickSortMemory.cpp.obj: ../QuickSortMemory.h
+CMakeFiles/Trabalho01.dir/QuickSortMemory.cpp.obj: ../QuickSortPointer.h
 
 CMakeFiles/Trabalho01.dir/QuickSortPointer.cpp.obj: ../QuickSortPointer.cpp
 CMakeFiles/Trabalho01.dir/QuickSortPointer.cpp.obj: ../QuickSortPointer.h
@@ -20,6 +21,7 @@ CMakeFiles/Trabalho01.dir/QuickSortRandomPivot.cpp.obj: ../QuickSortRandomPivot.
 
 CMakeFiles/Trabalho01.dir/main.cpp.obj: ../QuickSortBfprt.h
 CMakeFiles/Trabalho01.dir/main.cpp.obj: ../QuickSortIndex.h
+CMakeFiles/Trabalho01.dir/main.cpp.obj: ../QuickSortMemory.h
 CMakeFiles/Trabalho01.dir/main.cpp.obj: ../QuickSortPointer.h
 CMakeFiles/Trabalho01.dir/main.cpp.obj: ../QuickSortRandomPivot.h
 CMakeFiles/Trabalho01.dir/main.cpp.obj: ../main.cpp

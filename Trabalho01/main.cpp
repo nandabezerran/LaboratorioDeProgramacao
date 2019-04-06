@@ -7,6 +7,7 @@
 #include "QuickSortPointer.h"
 #include "QuickSortRandomPivot.h"
 #include "QuickSortBfprt.h"
+#include "QuickSortMemory.h"
 using namespace std::chrono;
 //TODO Quicksort with index
 //TODO Quicksort with pointers
@@ -32,6 +33,7 @@ int main() {
     QuickSortPointer qSortP;
     QuickSortRandomPivot qSortRp;
     QuickSortBfprt qSortBfprt;
+    QuickSortMemory qSortMemory;
 
     while(option != 0) {
         std::cout << "Whats the size of the vector? " << std::endl;
@@ -41,12 +43,12 @@ int main() {
         int *fin = vector + (size - 1);
 
         std::cout << "InitialVector:   ";
-        qSortBfprt.PrintVector_(vector, fin);
+        qSortMemory.PrintVector_(vector, fin);
         auto start = high_resolution_clock::now();
-        qSortBfprt.QuickSort_(init, fin);
+        qSortMemory.QuickSort_(init, fin);
         auto stop = high_resolution_clock::now();
         std::cout << "After QuickSort: ";
-        qSortBfprt.PrintVector_(vector, fin);
+        qSortMemory.PrintVector_(vector, fin);
 
         auto duration = duration_cast<microseconds>(stop - start);
         cout << "Time taken by function: "

@@ -6,8 +6,13 @@
 #define TRABALHO01_QUICKSORTMEMORY_H
 
 
-class QuickSortMemory {
+#include "QuickSortPointer.h"
 
+class QuickSortMemory : public QuickSortPointer{
+public:
+    QuickSortMemory();
+
+    void QuickSort_(int *init, int *fin) override;
 };
 
 
