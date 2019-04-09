@@ -49,12 +49,12 @@ int main() {
             int* fin = init + size - 1;
 
             std::cout << "InitialVector:   ";
-            qSortP.PrintVector_(vector, fin);
+            qSortBfprt.PrintVector_(vector, fin);
             auto start = high_resolution_clock::now();
-            qSortP.QuickSort_(init, fin);
+            qSortBfprt.QuickSort_(init, fin);
             auto stop = high_resolution_clock::now();
             std::cout << "After QuickSort: ";
-            qSortP.PrintVector_(vector, fin);
+            qSortBfprt.PrintVector_(vector, fin);
 
             auto duration = duration_cast<microseconds>(stop - start);
             cout << "Time taken by function: "

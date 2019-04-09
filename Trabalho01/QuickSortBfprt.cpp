@@ -43,15 +43,15 @@ void QuickSortBfprt::QuickSort_(int *init, int *fin) {
         return;
     }
     BFPRT(init, i, fin);
-    std::tuple<int*, int*> pivots = LomutoTriplePartitioning_(init, fin, i);
+    
 
-    if(get<0>(pivots) > init ){
-        finL = get<0>(pivots) - 1;
+    if(i > init ){
+        finL = i - 1;
         QuickSort_(init, finL);
     }
 
-    if(get<1>(pivots) < fin ){
-        initR = get<1>(pivots) + 1;
+    if(i < fin ){
+        initR = i + 1;
         QuickSort_(initR, fin);
 
     }
@@ -105,7 +105,7 @@ void QuickSortBfprt::BFPRT(int *init, int *&i, int *fin) {
         HoareSelection(auxI, auxF, middle);
         Swap_(u, middle);
         auxI = auxF + 1;
-        if(auxF - fin < 5){
+        if(fin - auxF < 5){
             auxF = auxF + (fin - auxF);
         }
         else{
@@ -116,7 +116,18 @@ void QuickSortBfprt::BFPRT(int *init, int *&i, int *fin) {
     }
 
     BFPRT(init, i, u);
+    tuple <int*, int*> pivos = LomutoTriplePartitioning_(init, fin, i);
 
+    if (i >= get<0>(pivos) || get<1>(pivos) >= i){
+        i = get<0>(pivos);
+        return;
+    }else if( i < get<0>(pivos)){
+        int *fimEsq = get<0>(pivos) -1;
+        BFPRT(init,i, fimEsq);
+    }else if(i > get<1>(pivos)){
+        int *inicioDir = get<1>(pivos) + 1;
+        BFPRT(inicioDir, i, fin);
+    }
 }
 
 
