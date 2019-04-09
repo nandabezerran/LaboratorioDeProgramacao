@@ -35,22 +35,22 @@ tuple<int *, int *> QuickSortBfprt::LomutoTriplePartitioning_(int *init, int *fi
 void QuickSortBfprt::QuickSort_(int *init, int *fin) {
     int *initR;
     int *finL;
-    int *r, *s;
     int *i  = init + (fin - init)/2;
 
 
     if (fin <= init){
         return;
     }
+
     BFPRT(init, i, fin);
     
 
-    if(i > init ){
+    if(i != init || i == fin){
         finL = i - 1;
         QuickSort_(init, finL);
     }
 
-    if(i < fin ){
+    if(i == init || i != fin ){
         initR = i + 1;
         QuickSort_(initR, fin);
 
@@ -90,6 +90,7 @@ void QuickSortBfprt::HoareSelection(int *init, int *fin, int *iPivot) {
 
 void QuickSortBfprt::BFPRT(int *init, int *i, int *fin) {
     int *middle;
+    int *M;
     int *auxI = init;
     int *auxF = init + 4;
     int *u = init; //Variable to swap the medians with the firsts places
@@ -108,26 +109,23 @@ void QuickSortBfprt::BFPRT(int *init, int *i, int *fin) {
             auxF = auxF + (fin - auxF);
         }
         else{
-            auxF = auxF + 4;
+            auxF = auxF + 5;
         }
         u = u + 1;
 
     }
+    u = u - 1;
+    M = init + (u - init)/2;
+    BFPRT(init, M, u);
 
-    i = init + (u - init)/2;
-    BFPRT(init, i, u);
+    tuple <int*, int*> pivos = LomutoTriplePartitioning_(init, fin, M);
 
-    tuple <int*, int*> pivos = LomutoTriplePartitioning_(init, fin, i);
-
-    if (i >= get<0>(pivos) || get<1>(pivos) >= i){
-        i = get<0>(pivos);
+    if (i >= get<0>(pivos) && get<1>(pivos) >= i){
         return;
-    }else if( i < get<0>(pivos)){
-        int *fimEsq = get<0>(pivos) -1;
-        BFPRT(init,i, fimEsq);
+    }else if(i < get<0>(pivos)){
+        BFPRT(init,i, get<0>(pivos) -1);
     }else if(i > get<1>(pivos)){
-        int *inicioDir = get<1>(pivos) + 1;
-        BFPRT(inicioDir, i, fin);
+        BFPRT(get<1>(pivos) + 1, i, fin);
     }
 }
 

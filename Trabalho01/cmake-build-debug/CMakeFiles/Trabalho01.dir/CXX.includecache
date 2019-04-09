@@ -6,51 +6,15 @@
 
 #IncludeRegexTransform: 
 
+C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortBfprt.cpp
+QuickSortBfprt.h
+C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortBfprt.h
+
 C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortBfprt.h
 QuickSortPointer.h
 C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortPointer.h
 tuple
 -
 
-C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortIndex.h
-
-C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortMemory.h
-QuickSortPointer.h
 C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortPointer.h
-
-C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortPointer.h
-
-C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortRandomPivot.h
-QuickSortPointer.h
-C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortPointer.h
-
-C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/instancias_ruins_Quicksort.hpp
-new
--
-utility
--
-
-C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/main.cpp
-iostream
--
-time.h
--
-stdlib.h
--
-algorithm
--
-chrono
--
-QuickSortIndex.h
-C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortIndex.h
-QuickSortPointer.h
-C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortPointer.h
-QuickSortRandomPivot.h
-C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortRandomPivot.h
-QuickSortBfprt.h
-C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortBfprt.h
-QuickSortMemory.h
-C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/QuickSortMemory.h
-instancias_ruins_Quicksort.hpp
-C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho01/instancias_ruins_Quicksort.hpp
 
