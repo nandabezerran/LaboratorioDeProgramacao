@@ -56,7 +56,7 @@ using std::swap;
 
 // -----------------------------------------------------------------------------
 
-int ChoosePivot_ (int primeiro, int ultimo);
+int ChoosePivot(int primeiro, int ultimo);
 
 
 // VALOR DE RETORNO: * true:  indica erro (falta de memória);
@@ -71,7 +71,7 @@ bool escrever_instancia (T *v, int n)
 
    for (i = n-1; i != -1; --i)
      {
-      int p = ChoosePivot_(0,i);  v[ pos[p] ] = i;
+      int p = ChoosePivot(0, i);  v[ pos[p] ] = i;
 
       swap( pos[p], pos[0] );  swap( pos[0], pos[i] );
      }

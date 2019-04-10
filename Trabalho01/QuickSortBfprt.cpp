@@ -42,7 +42,7 @@ void QuickSortBfprt::QuickSort_(int *init, int *fin) {
         return;
     }
 
-    BFPRT(init, i, fin);
+    BFPRT_(init, i, fin);
     
 
     if(i != init || i == fin){
@@ -57,7 +57,7 @@ void QuickSortBfprt::QuickSort_(int *init, int *fin) {
     }
 }
 
-void QuickSortBfprt::HoareSelection(int *init, int *fin, int *iPivot) {
+void QuickSortBfprt::HoareSelection_(int *init, int *fin, int *iPivot) {
     int *pivot = ChoosePivot_(init, fin);
 
     Swap_(init, pivot);
@@ -79,16 +79,16 @@ void QuickSortBfprt::HoareSelection(int *init, int *fin, int *iPivot) {
     }
 
     if (iPivot < pivot){
-        HoareSelection(init, pivot-1, iPivot);
+        HoareSelection_(init, pivot - 1, iPivot);
     }
 
     else{
-        HoareSelection(pivot + 1, fin, iPivot);
+        HoareSelection_(pivot + 1, fin, iPivot);
     }
 
 }
 
-void QuickSortBfprt::BFPRT(int *init, int *i, int *fin) {
+void QuickSortBfprt::BFPRT_(int *init, int *i, int *fin) {
     int *middle;
     int *M;
     int *auxI = init;
@@ -96,13 +96,13 @@ void QuickSortBfprt::BFPRT(int *init, int *i, int *fin) {
     int *u = init; //Variable to swap the medians with the firsts places
 
     if ((fin - init) <= 5){
-        HoareSelection(init, fin, i);
+        HoareSelection_(init, fin, i);
         return;
     }
 
     while(auxI <= fin){
         middle = ChoosePivot_(auxI, auxF);
-        HoareSelection(auxI, auxF, middle);
+        HoareSelection_(auxI, auxF, middle);
         Swap_(u, middle);
         auxI = auxF + 1;
         if(fin - auxF < 5){
@@ -116,16 +116,16 @@ void QuickSortBfprt::BFPRT(int *init, int *i, int *fin) {
     }
     u = u - 1;
     M = init + (u - init)/2;
-    BFPRT(init, M, u);
+    BFPRT_(init, M, u);
 
     tuple <int*, int*> pivos = LomutoTriplePartitioning_(init, fin, M);
 
     if (i >= get<0>(pivos) && get<1>(pivos) >= i){
         return;
     }else if(i < get<0>(pivos)){
-        BFPRT(init,i, get<0>(pivos) -1);
+        BFPRT_(init, i, get<0>(pivos) - 1);
     }else if(i > get<1>(pivos)){
-        BFPRT(get<1>(pivos) + 1, i, fin);
+        BFPRT_(get<1>(pivos) + 1, i, fin);
     }
 }
 
