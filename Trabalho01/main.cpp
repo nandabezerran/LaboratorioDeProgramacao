@@ -33,10 +33,10 @@ int ChoosePivot(int first, int last){
     return pivot;
 }
 
-void AleatoryVector(int* vector, int size){
+void AleatoryVector(int* vector, int size, int range){
     srand((unsigned)time(nullptr));
     for (int i = 0; i < size; ++i) {
-        vector[i] = rand() % 100;
+        vector[i] = rand() % range;
     }
 
 }
@@ -46,6 +46,7 @@ int main() {
     int option = 1;// Variable to receive the option of the user, if he want to continue or not in the loop;
     int typeEntry; // Variable to keep the type of generation of the vector;
     int isOrdered;
+    int range;
 
     // Every type of quick sort is a class. So here we instantiate all the types;
     QuickSortIndex qSortI;
@@ -60,6 +61,9 @@ int main() {
     while(option != 0) {
         std::cout << "How do you want your vector?\n0 - Aleatory Vector\n1 - Instance Generator " << std::endl;
         std::cin >> typeEntry;
+
+        std::cout << "What's the range of the aleatory numbers?\n" << std::endl;
+        std::cin >> range;
 
         if (typeEntry != 0 && typeEntry != 1) {
             std::cout << "Wrong type of entry. " << std::endl;
@@ -78,7 +82,7 @@ int main() {
 
             // Using the aleatory generator;
             if (typeEntry == 0) {
-                AleatoryVector(vector, size);
+                AleatoryVector(vector, size, range);
 
             }
 
