@@ -1,7 +1,10 @@
 #include <iostream>
 #include <string.h>
 
-void printVector(const int* vector){
+/* Print to the user the result vector
+ * @param vector the vector we want to print
+ */
+void printResultVector(const int *vector){
     while(*vector != -1){
         std::cout << *vector << " ";
         vector = vector + 1;
@@ -9,6 +12,13 @@ void printVector(const int* vector){
     std::cout << std::endl;
 }
 
+/* Searches using a brute force way subsequences in the text which are equal to the pattern. Then fill up the pResult
+ * vector with the index in which those subsequences starts. When there is no more ocurrencies the last item of the vector is a
+ * -1 to indicate the end of the content, because the pResult may be bigger than its content.
+ * @param pText the text in which we want to search the subsequences
+ * @param pPattern pattern we want to search in the text.
+ * @param pResult vector that will be filled up with the index in which those subsequences starts.
+ */
 void bruteForceAlgorithm(const char* pText, const char* pPattern, int *pResult){
     int goThroughPattern = 0;      // It counts in which index we are in the pattern;
     int    goThroughText = 0;      // It counts in which index we are in the text;
@@ -36,6 +46,12 @@ void bruteForceAlgorithm(const char* pText, const char* pPattern, int *pResult){
     }
     *pResult = -1;
 }
+
+/* Calculates the vector pPiVector, where pPiVector[j] is the length of the longest proper prefix of the pattern
+ * pPattern[0 ... j] which is also a suffix of this pattern.
+ * @param pPattern the pattern you want to search the ocurrencies in the text
+ * @param pPiVector the vector to be filled with the size of the longest prefix in every pPattern[0 ... j]
+ */
 int* computationOfPi(const char* pPattern, int* pPiVector){
     int k;
     int lenght;
@@ -65,11 +81,21 @@ int* computationOfPi(const char* pPattern, int* pPiVector){
     return pPiVector;
 }
 
+/* Searches using the technique of Knuth Morris Pratt subsequences in the text which are equal to the pattern.
+ * Then fill up the pResult vector with the index in which those subsequences starts.
+ * When there is no more ocurrencies the last item of the vector is a -1 to indicate the end of the content, because
+ * the pResult may be bigger than its content.
+ * @param pText the text in which we want to search the subsequences
+ * @param pPattern pattern we want to search in the text.
+ * @param pResult vector that will be filled up with the index in which those subsequences starts.
+ */
 void knuthMorrisPratt(const char* pText, const char* pPattern, int *pResult){
     int *piVector =  new int[sizeof(pPattern)]();
-    computationOfPi(pPattern, piVector);
     int goThroughText = 0;
     int goThroughPattern = 0;
+
+    computationOfPi(pPattern, piVector);
+
     while(*(pText + goThroughText) != '\0'){
         if(*(pText + goThroughText) != *(pPattern + goThroughPattern)){
             if(goThroughPattern == 0){
@@ -109,10 +135,10 @@ int main() {
     strcpy(pattern, "a");
 
     bruteForceAlgorithm(text,pattern,result);
-    printVector(result);
+    printResultVector(result);
 
     knuthMorrisPratt(text,pattern,result);
-    printVector(result);
+    printResultVector(result);
 
     return 0;
 }
