@@ -1,11 +1,48 @@
 #include <iostream>
 #include <string.h>
+#include "instancias_Reais_Trabalho_2.hpp"
+#include <time.h>
+
+void generateVectorA(char* pVector, int pSize, int b){
+    for (int i = 0; i < pSize - 1; ++i) {
+        pVector[i] = 'a';
+    }
+    if (b == 1){
+        pVector[pSize - 1] = 'b';
+        pVector[pSize] = '\0';
+    }
+    else {
+        pVector[pSize - 1] = '\0';
+    }
+}
+
+void aleatoryVector(char* vector, int size, int range){
+    char alphabet[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
+                       'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+
+    for (int i = 0; i < size - 1; ++i) {
+        vector[i] = alphabet[rand() % range];
+    }
+    vector[size-1] = '\0';
+
+}
 
 /* Print to the user the result vector
  * @param vector the vector we want to print
  */
 void printResultVector(const int *vector){
     while(*vector != -1){
+        std::cout << *vector << " ";
+        vector = vector + 1;
+    }
+    std::cout << std::endl;
+}
+
+/* Print a char vector
+ * @param vector the vector we want to print
+ */
+void printCharVector(const char *vector){
+    while(*vector != '\0'){
         std::cout << *vector << " ";
         vector = vector + 1;
     }
@@ -31,11 +68,12 @@ void bruteForceAlgorithm(const char* pText, const char* pPattern, int *pResult){
 
         else{
             pPattern = pPattern - goThroughPattern;
+            goThroughPattern = 0;
         }
 
         if(*pPattern == '\0'){
             pPattern = pPattern - goThroughPattern;
-            *pResult = goThroughText - goThroughPattern;
+            *pResult = goThroughText - goThroughPattern + 1;
             pResult = pResult + 1;
             goThroughPattern = 0;
         }
@@ -52,33 +90,32 @@ void bruteForceAlgorithm(const char* pText, const char* pPattern, int *pResult){
  * @param pPattern the pattern you want to search the ocurrencies in the text
  * @param pPiVector the vector to be filled with the size of the longest prefix in every pPattern[0 ... j]
  */
-int* computationOfPi(const char* pPattern, int* pPiVector){
+void computationOfPi(const char* pPattern, int* pPiVector){
     int k;
-    int lenght;
+    int length;
     *pPiVector = 0;
-    for (int i = 1; *(pPattern + i) != '\0' ; ++i) {
+    for (int i = 1; pPattern[i] != '\0' ; ++i) {
         k = i - 1;
         for(;;){
-            lenght = *(pPiVector + k);
-            if (lenght == 0) {
-                if (*pPattern == *(pPattern + i)) {
-                    *(pPiVector + i) = 1;
+            length = pPiVector[k];
+            if (length == 0) {
+                if (pPattern[0] == pPattern[i]) {
+                    pPiVector[i] = 1;
                     break;
                 } else {
-                    *(pPiVector + i) = 0;
+                    pPiVector[i] = 0;
                     break;
                 }
             } else {
-                if (*(pPattern + i) == *(pPattern + lenght)) {
-                    *(pPiVector + i) = lenght + 1;
+                if (pPattern[i] == pPattern[length]) {
+                    pPiVector[i] = length + 1;
                     break;
                 } else {
-                    k = lenght - 1;
+                    k = length - 1;
                 }
             }
         }
     }
-    return pPiVector;
 }
 
 /* Searches using the technique of Knuth Morris Pratt subsequences in the text which are equal to the pattern.
@@ -96,20 +133,20 @@ void knuthMorrisPratt(const char* pText, const char* pPattern, int *pResult){
 
     computationOfPi(pPattern, piVector);
 
-    while(*(pText + goThroughText) != '\0'){
-        if(*(pText + goThroughText) != *(pPattern + goThroughPattern)){
+    while(pText[goThroughText] != '\0'){
+        if(pText[goThroughText] != pPattern[goThroughPattern]){
             if(goThroughPattern == 0){
                 goThroughText++;
             }
             else{
-                goThroughPattern = *(piVector + goThroughPattern - 1);
+                goThroughPattern = piVector[goThroughPattern - 1];
             }
         }
         else{
-            if(*(pPattern + goThroughPattern) == '\0' ){
+            if(pPattern[goThroughPattern + 1] == '\0' ){
                 *pResult = goThroughText - goThroughPattern;
                 pResult = pResult + 1;
-                goThroughPattern = *(piVector + goThroughPattern);
+                goThroughPattern = piVector[goThroughPattern];
                 goThroughText++;
             }
             else{
@@ -118,27 +155,165 @@ void knuthMorrisPratt(const char* pText, const char* pPattern, int *pResult){
             }
         }
     }
+
+    *pResult = -1;
+    free(piVector);
+
+}
+
+bool checkEquality(int* pResultBrute, int* pResultKnuth){
+    bool flag = true;
+    while(*pResultBrute != -1 && *pResultKnuth != -1){
+        if(*pResultBrute != *pResultKnuth){
+            flag = false;
+        }
+        pResultBrute++;
+        pResultKnuth++;
+    }
+    return flag;
 }
 
 int main() {
-//    int textSize;
-//    int patternSize;
-    int *result = new int[sizeof("o celito e o amor da minha vidda")]();
-//    std::cout << "Please, enter the size of the text " << std::endl;
-//    std::cin >> textSize;
-//    std::cout << "Please, enter the size of the pattern " << std::endl;
-//    std::cin >> patternSize;
+    //TODO instancias aleatorias
+    //TODO instancias reais
+    //TODO pior caso 1
+    //TODO pior caso 2
 
-    char *text = new char[sizeof("o celito é o amor da minha vidda")]();
-    strcpy(text, "o celito é o amor da minha vidda");
-    char *pattern = new char[sizeof("a")]();
-    strcpy(pattern, "a");
+    srand((unsigned)clock()); // To generate the aleatory vectors;
 
-    bruteForceAlgorithm(text,pattern,result);
-    printResultVector(result);
+    int instancesOp;
+    int indexRealPattern;
+    int textSize;
+    int patternSize;
+    int firstLetters;
+    int op = 1;
+    bool eqResultVectors;
 
-    knuthMorrisPratt(text,pattern,result);
-    printResultVector(result);
+    while(op == 1) {
+        std::cout << "Please, enter the what kind of instances generator you want\n >>> 1 - Random\n >>> 2 -"
+                     " Real\n >>> 3 - Worst Case #1\n >>> 4 - Worst Case #2" << std::endl;
+        std::cin >> instancesOp;
 
+        if (instancesOp == 1) {
+            std::cout << "Please, enter the size of the text" << std::endl;
+            std::cin >> textSize;
+            std::cout << "Please, enter the size of the pattern" << std::endl;
+            std::cin >> patternSize;
+            std::cout << "Please, enter your L, a number between 0 ... 26. (L firts leters of the alphabet)"
+                      << std::endl;
+            std::cin >> firstLetters;
+
+            char *text = new char[textSize + 1];
+            char *pattern = new char[patternSize + 1];
+            int *resultBrute = new int[patternSize + 1];
+            int *resultKnuth = new int[patternSize + 1];
+
+            aleatoryVector(text, textSize + 1, firstLetters);
+            aleatoryVector(pattern, patternSize + 1, firstLetters);
+
+            printCharVector(text);
+            printCharVector(pattern);
+
+            bruteForceAlgorithm(text, pattern, resultBrute);
+            printResultVector(resultBrute);
+
+            knuthMorrisPratt(text, pattern, resultKnuth);
+            printResultVector(resultKnuth);
+
+            eqResultVectors = checkEquality(resultBrute, resultKnuth);
+
+            if(!eqResultVectors){
+                std::cout << "The result vectors aren't equal" << std::endl;
+            }
+            else{
+                std::cout << "The result vectors are equal" << std::endl;
+            }
+        }
+
+        if (instancesOp == 2) {
+            std::cout << "Please, enter the index of the Pattern, its a number between 0 ... 35129" << std::endl;
+            std::cin >> indexRealPattern;
+            std::cout << "The pattern you choose: ";
+            std::cout << Padroes_Palavras[indexRealPattern] << std::endl;
+
+            int *result = new int[sizeof(Padroes_Palavras[indexRealPattern])]();
+
+            bruteForceAlgorithm(Texto_Livros, Padroes_Palavras[indexRealPattern], result);
+            printResultVector(result);
+
+            knuthMorrisPratt(Texto_Livros, Padroes_Palavras[indexRealPattern], result);
+            printResultVector(result);
+        }
+
+        if (instancesOp == 3){
+            std::cout << "Please, enter the size of the text" << std::endl;
+            std::cin >> textSize;
+            std::cout << "Please, enter the size of the pattern" << std::endl;
+            std::cin >> patternSize;
+
+            char       *text = new char[textSize + 1];
+            char    *pattern = new char[patternSize];
+            int *resultBrute = new int[patternSize];
+            int *resultKnuth = new int[patternSize];
+
+            generateVectorA(text, textSize, 0);
+            generateVectorA(pattern, patternSize, 1);
+
+            printCharVector(text);
+            printCharVector(pattern);
+
+            bruteForceAlgorithm(text, pattern, resultBrute);
+            printResultVector(resultBrute);
+
+            knuthMorrisPratt(text, pattern, resultKnuth);
+            printResultVector(resultKnuth);
+
+            eqResultVectors = checkEquality(resultBrute, resultKnuth);
+
+            if(!eqResultVectors){
+                std::cout << "The result vectors aren't equal" << std::endl;
+            }
+            else{
+                std::cout << "The result vectors are equal" << std::endl;
+            }
+
+        }
+
+        if (instancesOp == 4){
+            std::cout << "Please, enter the size of the text" << std::endl;
+            std::cin >> textSize;
+            std::cout << "Please, enter the size of the pattern" << std::endl;
+            std::cin >> patternSize;
+
+            char       *text = new char[textSize + 1];
+            char    *pattern = new char[patternSize];
+            int *resultBrute = new int[patternSize];
+            int *resultKnuth = new int[patternSize];
+
+            generateVectorA(text, textSize, 0);
+            generateVectorA(pattern, patternSize, 0);
+
+            printCharVector(text);
+            printCharVector(pattern);
+
+            bruteForceAlgorithm(text, pattern, resultBrute);
+            printResultVector(resultBrute);
+
+            knuthMorrisPratt(text, pattern, resultKnuth);
+            printResultVector(resultKnuth);
+
+            eqResultVectors = checkEquality(resultBrute, resultKnuth);
+
+            if(!eqResultVectors){
+                std::cout << "The result vectors aren't equal" << std::endl;
+            }
+            else{
+                std::cout << "The result vectors are equal" << std::endl;
+            }
+
+        }
+        std::cout << "Do you want to continue?\n >>> Press 1 to continue\n >>> Press anything to exit." << std::endl;
+        std::cin >> op;
+    }
     return 0;
 }
