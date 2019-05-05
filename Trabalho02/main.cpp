@@ -2,7 +2,11 @@
 #include <string.h>
 #include "instancias_Reais_Trabalho_2.hpp"
 #include <time.h>
+#include <chrono>
 
+/* It counts how many elements there is in the char vector
+ * @param pPointer the vector we want to count
+ */
 int countCStringSize(const char* pPointer){
     int count = 0;
     while(*pPointer != '\0'){
@@ -11,6 +15,12 @@ int countCStringSize(const char* pPointer){
     }
     return count;
 }
+
+/* It generates an vector with only a's. If the variable b is 1 our last letter will be a b
+ * @param pVector the structure already allocated
+ * @param pSize how big the user want the vector
+ * @param b to know if we are going to have a b how the last letter of the vector
+ */
 void generateVectorA(char* pVector, int pSize, int b){
     for (int i = 0; i < pSize - 1; ++i) {
         pVector[i] = 'a';
@@ -23,7 +33,11 @@ void generateVectorA(char* pVector, int pSize, int b){
         pVector[pSize - 1] = '\0';
     }
 }
-
+/* It generates an aleatory vector given a size with the first range letters of de alphabet
+ * @param vector the structure already allocated
+ * @param size how big the user want the vector
+ * @param range the firsts letters of the alphabet
+ */
 void aleatoryVector(char* vector, int size, int range){
     char alphabet[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
                        'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
@@ -164,7 +178,10 @@ void knuthMorrisPratt(const char* pText, const char* pPattern, int *pResult){
     delete[] piVector;
 
 }
-
+/* It compares two vectors to check if they are equal. Return true if they are equal and false otherwise
+ * @param pResultBrute
+ * @param pResultKnuth
+ */
 bool checkEquality(int* pResultBrute, int* pResultKnuth){
     bool flag = true;
     while(*pResultBrute != -1 && *pResultKnuth != -1){
@@ -178,10 +195,6 @@ bool checkEquality(int* pResultBrute, int* pResultKnuth){
 }
 
 int main() {
-    //TODO instancias aleatorias
-    //TODO instancias reais
-    //TODO pior caso 1
-    //TODO pior caso 2
 
     srand((unsigned)clock()); // To generate the aleatory vectors;
 
@@ -229,7 +242,7 @@ int main() {
                              "alphabet)"<< std::endl;
                 std::cin >> firstLetters;
             }
-            
+
             textSize++;
             patternSize++;
 
@@ -241,14 +254,27 @@ int main() {
             aleatoryVector(text, textSize, firstLetters);
             aleatoryVector(pattern, patternSize, firstLetters);
 
-            printCharVector(text);
-            printCharVector(pattern);
+//            printCharVector(text);
+//            printCharVector(pattern);
 
+            auto start = std::chrono::high_resolution_clock::now(); // Starts the clock;
             bruteForceAlgorithm(text, pattern, resultBrute);
-            printResultVector(resultBrute);
-            std::cout << "----------------------------------------"<< std::endl;
+            auto stop = std::chrono::high_resolution_clock::now();
+
+            // Compute the duration of the function;
+            auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+
+            std::cout << "Time taken by BruteForce algorithm: "
+                 << duration.count() << " microseconds\n" << std::endl;
+
+            start = std::chrono::high_resolution_clock::now();
             knuthMorrisPratt(text, pattern, resultKnuth);
-            printResultVector(resultKnuth);
+            stop = std::chrono::high_resolution_clock::now();
+            duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+
+            std::cout << "Time taken by Knuth Morris Pratt algorithm: "
+                      << duration.count() << " microseconds\n" << std::endl;
+
 
             eqResultVectors = checkEquality(resultBrute, resultKnuth);
 
@@ -259,6 +285,9 @@ int main() {
                 std::cout << "The result vectors are equal" << std::endl;
             }
 
+            std::cout << "---------------------------------------------------------------------------------------------"
+                      << std::endl;
+
             delete[] text;
             delete[] pattern;
             delete[] resultBrute;
@@ -266,19 +295,51 @@ int main() {
         }
 
         if (instancesOp == 2) {
-            std::cout << "Please, enter the index of the Pattern, its a number between 0 ... 35129" << std::endl;
+            std::cout << "Please, enter the index of the Pattern, its a number in [0 ... 35129]" << std::endl;
             std::cin >> indexRealPattern;
+
+            while(indexRealPattern < 0 || indexRealPattern > 35129 ){
+                std::cout << "Please, reenter the index of the Pattern, it must be a number in [0 ... 35129]"
+                << std::endl;
+                std::cin >> indexRealPattern;
+            }
+
             std::cout << "The pattern you choose: ";
-            std::cout << Padroes_Palavras[indexRealPattern] << std::endl;
+            std::cout << Padroes_Palavras[indexRealPattern] ;
+            std::cout << "\n" << std::endl;
 
             int *resultBrute = new int[sizeof(Padroes_Palavras)]();
             int *resultKnuth = new int[sizeof(Padroes_Palavras)]();
 
+            auto start = std::chrono::high_resolution_clock::now(); // Starts the clock;
             bruteForceAlgorithm(Texto_Livros, Padroes_Palavras[indexRealPattern], resultBrute);
-            printResultVector(resultBrute);
+            auto stop = std::chrono::high_resolution_clock::now();
 
+            // Compute the duration of the function;
+            auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+
+            std::cout << "Time taken by BruteForce algorithm: "
+                      << duration.count() << " microseconds\n" << std::endl;
+
+            start = std::chrono::high_resolution_clock::now();
             knuthMorrisPratt(Texto_Livros, Padroes_Palavras[indexRealPattern], resultKnuth);
-            printResultVector(resultKnuth);
+            stop = std::chrono::high_resolution_clock::now();
+            duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+
+            std::cout << "Time taken by Knuth Morris Pratt algorithm: "
+                      << duration.count() << " microseconds\n" << std::endl;
+
+            eqResultVectors = checkEquality(resultBrute, resultKnuth);
+
+            if(!eqResultVectors){
+                std::cout << "The result vectors aren't equal" << std::endl;
+            }
+            else{
+                std::cout << "The result vectors are equal" << std::endl;
+            }
+
+            std::cout << "---------------------------------------------------------------------------------------------"
+                      << std::endl;
 
             delete[] resultBrute;
             delete[] resultKnuth;
@@ -289,6 +350,15 @@ int main() {
             std::cin >> textSize;
             std::cout << "Please, enter the size of the pattern" << std::endl;
             std::cin >> patternSize;
+
+            while(patternSize > textSize){
+                std::cout << "Please, reenter the size of the text" << std::endl;
+                std::cin >> textSize;
+                std::cout << "Please, reenter the size of the pattern it must be smaller than the size of the text"
+                             "" << std::endl;
+                std::cin >> patternSize;
+            }
+
             textSize++;
             patternSize++;
 
@@ -300,14 +370,27 @@ int main() {
             generateVectorA(text, textSize, 0);
             generateVectorA(pattern, patternSize, 1);
 
-            printCharVector(text);
-            printCharVector(pattern);
+//            printCharVector(text);
+//            printCharVector(pattern);
 
+
+            auto start = std::chrono::high_resolution_clock::now(); // Starts the clock;
             bruteForceAlgorithm(text, pattern, resultBrute);
-            printResultVector(resultBrute);
+            auto stop = std::chrono::high_resolution_clock::now();
 
+            // Compute the duration of the function;
+            auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+
+            std::cout << "Time taken by BruteForce algorithm: "
+                      << duration.count() << " microseconds\n" << std::endl;
+
+            start = std::chrono::high_resolution_clock::now();
             knuthMorrisPratt(text, pattern, resultKnuth);
-            printResultVector(resultKnuth);
+            stop = std::chrono::high_resolution_clock::now();
+            duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+
+            std::cout << "Time taken by Knuth Morris Pratt algorithm: "
+                      << duration.count() << " microseconds\n" << std::endl;
 
             eqResultVectors = checkEquality(resultBrute, resultKnuth);
 
@@ -317,6 +400,9 @@ int main() {
             else{
                 std::cout << "The result vectors are equal" << std::endl;
             }
+
+            std::cout << "---------------------------------------------------------------------------------------------"
+                      << std::endl;
 
             delete[] text;
             delete[] pattern;
@@ -331,6 +417,15 @@ int main() {
             std::cout << "Please, enter the size of the pattern" << std::endl;
             std::cin >> patternSize;
 
+            while(patternSize > textSize){
+                std::cout << "Please, reenter the size of the text" << std::endl;
+                std::cin >> textSize;
+                std::cout << "Please, reenter the size of the pattern it must be smaller than the size of the text"
+                             "" << std::endl;
+                std::cin >> patternSize;
+            }
+
+
             // Adding the extra char for the \0
             textSize++;
             patternSize++;
@@ -343,14 +438,26 @@ int main() {
             generateVectorA(text, textSize, 0);
             generateVectorA(pattern, patternSize, 0);
 
-            printCharVector(text);
-            printCharVector(pattern);
+//            printCharVector(text);
+//            printCharVector(pattern);
 
+            auto start = std::chrono::high_resolution_clock::now(); // Starts the clock;
             bruteForceAlgorithm(text, pattern, resultBrute);
-            printResultVector(resultBrute);
+            auto stop = std::chrono::high_resolution_clock::now();
 
+            // Compute the duration of the function;
+            auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+
+            std::cout << "Time taken by BruteForce algorithm: "
+                      << duration.count() << " microseconds\n" << std::endl;
+
+            start = std::chrono::high_resolution_clock::now();
             knuthMorrisPratt(text, pattern, resultKnuth);
-            printResultVector(resultKnuth);
+            stop = std::chrono::high_resolution_clock::now();
+            duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+
+            std::cout << "Time taken by Knuth Morris Pratt algorithm: "
+                      << duration.count() << " microseconds\n" << std::endl;
 
             eqResultVectors = checkEquality(resultBrute, resultKnuth);
 
@@ -361,6 +468,8 @@ int main() {
                 std::cout << "The result vectors are equal" << std::endl;
             }
 
+            std::cout << "---------------------------------------------------------------------------------------------"
+            << std::endl;
             delete[] text;
             delete[] pattern;
             delete[] resultBrute;
