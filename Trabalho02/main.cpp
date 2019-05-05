@@ -59,35 +59,24 @@ void printCharVector(const char *vector){
  */
 void bruteForceAlgorithm(const char* pText, const char* pPattern, int *pResult){
     int goThroughPattern = 0;      // It counts in which index we are in the pattern;
-    int    goThroughText = 0;      // It counts in which index we are in the text;
+    const char *goThroughText = pText;      // It counts in which index we are in the text;
 
-    while(*pText != '\0'){
-        if(*pText == *pPattern){
-            pPattern++;
-            goThroughPattern++;
-            pText++;
-            goThroughText++;
+    while(*goThroughText != '\0'){
+        if(*goThroughText == *pPattern){
+            const char *match = goThroughText + 1;
+            const char *patternAux = pPattern + 1;
+            while(*match == *patternAux && *patternAux != '\0') {
+                match++;
+                patternAux++;
+            }
+            if(*patternAux == '\0') {
+                *pResult = (int) (goThroughText - pText);
+                pResult++;
+            }
         }
-
-        else if(*pPattern == '\0') {
-            *pResult = goThroughText - goThroughPattern;
-            pResult++;
-            pText = (pText - goThroughPattern) + 1;
-        }
-
-        else{
-            pText++;
-            goThroughText++;
-            pPattern = pPattern - goThroughPattern;
-            goThroughPattern = 0;
-        }
-
+        goThroughText++;
     }
 
-    if(*pPattern == '\0') {
-        *pResult = goThroughText - goThroughPattern;
-        pResult++;
-    }
     *pResult = -1;
 }
 
@@ -305,8 +294,12 @@ int main() {
             std::cout << "Please, enter the size of the pattern" << std::endl;
             std::cin >> patternSize;
 
-            char       *text = new char[textSize + 1];
-            char    *pattern = new char[patternSize + 1];
+            // Adding the extra char for the \0
+            textSize++;
+            patternSize++;
+
+            char       *text = new char[textSize];
+            char    *pattern = new char[patternSize];
             int *resultBrute = new int[textSize];
             int *resultKnuth = new int[textSize];
 
