@@ -3,6 +3,14 @@
 #include "instancias_Reais_Trabalho_2.hpp"
 #include <time.h>
 
+int countCStringSize(const char* pPointer){
+    int count = 0;
+    while(*pPointer != '\0'){
+        count++;
+        pPointer++;
+    }
+    return count;
+}
 void generateVectorA(char* pVector, int pSize, int b){
     for (int i = 0; i < pSize - 1; ++i) {
         pVector[i] = 'a';
@@ -33,6 +41,7 @@ void aleatoryVector(char* vector, int size, int range){
 void printResultVector(const int *vector){
     int elements = 0;
     while(*vector != -1){
+        std::cout << *vector << std::endl;
         vector = vector + 1;
         elements++;
     }
@@ -122,7 +131,7 @@ void computationOfPi(const char* pPattern, int* pPiVector){
  * @param pResult vector that will be filled up with the index in which those subsequences starts.
  */
 void knuthMorrisPratt(const char* pText, const char* pPattern, int *pResult){
-    int *piVector =  new int[sizeof(pPattern)]();
+    int *piVector =  new int[countCStringSize(pPattern)]();
     int goThroughText = 0;
     int goThroughPattern = 0;
 
@@ -152,7 +161,7 @@ void knuthMorrisPratt(const char* pText, const char* pPattern, int *pResult){
     }
 
     *pResult = -1;
-    free(piVector);
+    delete[] piVector;
 
 }
 
@@ -185,26 +194,52 @@ int main() {
     bool eqResultVectors;
 
     while(op == 1) {
-        std::cout << "Please, enter the what kind of instances generator you want\n >>> 1 - Random\n >>> 2 -"
+        std::cout << "Please, enter the kind of instances generator you want\n >>> 1 - Random\n >>> 2 -"
                      " Real\n >>> 3 - Worst Case #1\n >>> 4 - Worst Case #2" << std::endl;
         std::cin >> instancesOp;
 
+        while(instancesOp < 1 || instancesOp > 4){
+            std::cout << "Please, reenter the what of instances generator you want, you entered a invalid one\n"
+                         " >>> 1 - Random\n >>> 2 -"
+                         " Real\n >>> 3 - Worst Case #1\n >>> 4 - Worst Case #2" << std::endl;
+            std::cin >> instancesOp;
+        }
+
         if (instancesOp == 1) {
+
             std::cout << "Please, enter the size of the text" << std::endl;
             std::cin >> textSize;
-            std::cout << "Please, enter the size of the pattern" << std::endl;
+            std::cout << "Please, enter the size of the pattern it must be smaller than the size of the text"
+                         "" << std::endl;
             std::cin >> patternSize;
-            std::cout << "Please, enter your L, a number between 0 ... 26. (L firts leters of the alphabet)"
+            std::cout << "Please, enter your L, it must be a number between 0 ... 26. (L firts leters of the alphabet)"
                       << std::endl;
             std::cin >> firstLetters;
 
-            char *text = new char[textSize + 1];
-            char *pattern = new char[patternSize + 1];
+            while(patternSize > textSize){
+                std::cout << "Please, reenter the size of the text" << std::endl;
+                std::cin >> textSize;
+                std::cout << "Please, reenter the size of the pattern it must be smaller than the size of the text"
+                             "" << std::endl;
+                std::cin >> patternSize;
+            }
+
+            while(firstLetters < 0 || firstLetters > 26){
+                std::cout << "Please, reenter your L, it must be a number between 0 ... 26. (L firts leters of the "
+                             "alphabet)"<< std::endl;
+                std::cin >> firstLetters;
+            }
+            
+            textSize++;
+            patternSize++;
+
+            char *text = new char[textSize];
+            char *pattern = new char[patternSize];
             int *resultBrute = new int[textSize];
             int *resultKnuth = new int[textSize];
 
-            aleatoryVector(text, textSize + 1, firstLetters);
-            aleatoryVector(pattern, patternSize + 1, firstLetters);
+            aleatoryVector(text, textSize, firstLetters);
+            aleatoryVector(pattern, patternSize, firstLetters);
 
             printCharVector(text);
             printCharVector(pattern);
@@ -254,9 +289,11 @@ int main() {
             std::cin >> textSize;
             std::cout << "Please, enter the size of the pattern" << std::endl;
             std::cin >> patternSize;
+            textSize++;
+            patternSize++;
 
-            char       *text = new char[textSize + 1];
-            char    *pattern = new char[patternSize + 1];
+            char       *text = new char[textSize];
+            char    *pattern = new char[patternSize];
             int *resultBrute = new int[textSize];
             int *resultKnuth = new int[textSize];
 
