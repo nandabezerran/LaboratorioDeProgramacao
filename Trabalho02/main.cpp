@@ -31,11 +31,12 @@ void aleatoryVector(char* vector, int size, int range){
  * @param vector the vector we want to print
  */
 void printResultVector(const int *vector){
+    int elements = 0;
     while(*vector != -1){
-        std::cout << *vector << " ";
         vector = vector + 1;
+        elements++;
     }
-    std::cout << std::endl;
+    std::cout << elements << std::endl;
 }
 
 /* Print a char vector
@@ -43,7 +44,7 @@ void printResultVector(const int *vector){
  */
 void printCharVector(const char *vector){
     while(*vector != '\0'){
-        std::cout << *vector << " ";
+        std::cout << *vector;
         vector = vector + 1;
     }
     std::cout << std::endl;
@@ -62,25 +63,30 @@ void bruteForceAlgorithm(const char* pText, const char* pPattern, int *pResult){
 
     while(*pText != '\0'){
         if(*pText == *pPattern){
-            pPattern = pPattern + 1;
+            pPattern++;
             goThroughPattern++;
+            pText++;
+            goThroughText++;
+        }
+
+        else if(*pPattern == '\0') {
+            *pResult = goThroughText - goThroughPattern;
+            pResult++;
+            pText = (pText - goThroughPattern) + 1;
         }
 
         else{
+            pText++;
+            goThroughText++;
             pPattern = pPattern - goThroughPattern;
             goThroughPattern = 0;
         }
 
-        if(*pPattern == '\0'){
-            pPattern = pPattern - goThroughPattern;
-            *pResult = goThroughText - goThroughPattern + 1;
-            pResult = pResult + 1;
-            goThroughPattern = 0;
-        }
+    }
 
-        pText = pText + 1;
-        goThroughText++;
-
+    if(*pPattern == '\0') {
+        *pResult = goThroughText - goThroughPattern;
+        pResult++;
     }
     *pResult = -1;
 }
@@ -205,8 +211,8 @@ int main() {
 
             char *text = new char[textSize + 1];
             char *pattern = new char[patternSize + 1];
-            int *resultBrute = new int[patternSize + 1];
-            int *resultKnuth = new int[patternSize + 1];
+            int *resultBrute = new int[textSize];
+            int *resultKnuth = new int[textSize];
 
             aleatoryVector(text, textSize + 1, firstLetters);
             aleatoryVector(pattern, patternSize + 1, firstLetters);
@@ -216,7 +222,7 @@ int main() {
 
             bruteForceAlgorithm(text, pattern, resultBrute);
             printResultVector(resultBrute);
-
+            std::cout << "----------------------------------------"<< std::endl;
             knuthMorrisPratt(text, pattern, resultKnuth);
             printResultVector(resultKnuth);
 
@@ -228,6 +234,11 @@ int main() {
             else{
                 std::cout << "The result vectors are equal" << std::endl;
             }
+
+            delete[] text;
+            delete[] pattern;
+            delete[] resultBrute;
+            delete[] resultKnuth;
         }
 
         if (instancesOp == 2) {
@@ -236,13 +247,17 @@ int main() {
             std::cout << "The pattern you choose: ";
             std::cout << Padroes_Palavras[indexRealPattern] << std::endl;
 
-            int *result = new int[sizeof(Padroes_Palavras[indexRealPattern])]();
+            int *resultBrute = new int[sizeof(Padroes_Palavras)]();
+            int *resultKnuth = new int[sizeof(Padroes_Palavras)]();
 
-            bruteForceAlgorithm(Texto_Livros, Padroes_Palavras[indexRealPattern], result);
-            printResultVector(result);
+            bruteForceAlgorithm(Texto_Livros, Padroes_Palavras[indexRealPattern], resultBrute);
+            printResultVector(resultBrute);
 
-            knuthMorrisPratt(Texto_Livros, Padroes_Palavras[indexRealPattern], result);
-            printResultVector(result);
+            knuthMorrisPratt(Texto_Livros, Padroes_Palavras[indexRealPattern], resultKnuth);
+            printResultVector(resultKnuth);
+
+            delete[] resultBrute;
+            delete[] resultKnuth;
         }
 
         if (instancesOp == 3){
@@ -252,9 +267,9 @@ int main() {
             std::cin >> patternSize;
 
             char       *text = new char[textSize + 1];
-            char    *pattern = new char[patternSize];
-            int *resultBrute = new int[patternSize];
-            int *resultKnuth = new int[patternSize];
+            char    *pattern = new char[patternSize + 1];
+            int *resultBrute = new int[textSize];
+            int *resultKnuth = new int[textSize];
 
             generateVectorA(text, textSize, 0);
             generateVectorA(pattern, patternSize, 1);
@@ -277,6 +292,11 @@ int main() {
                 std::cout << "The result vectors are equal" << std::endl;
             }
 
+            delete[] text;
+            delete[] pattern;
+            delete[] resultBrute;
+            delete[] resultKnuth;
+
         }
 
         if (instancesOp == 4){
@@ -286,9 +306,9 @@ int main() {
             std::cin >> patternSize;
 
             char       *text = new char[textSize + 1];
-            char    *pattern = new char[patternSize];
-            int *resultBrute = new int[patternSize];
-            int *resultKnuth = new int[patternSize];
+            char    *pattern = new char[patternSize + 1];
+            int *resultBrute = new int[textSize];
+            int *resultKnuth = new int[textSize];
 
             generateVectorA(text, textSize, 0);
             generateVectorA(pattern, patternSize, 0);
@@ -311,9 +331,14 @@ int main() {
                 std::cout << "The result vectors are equal" << std::endl;
             }
 
+            delete[] text;
+            delete[] pattern;
+            delete[] resultBrute;
+            delete[] resultKnuth;
         }
         std::cout << "Do you want to continue?\n >>> Press 1 to continue\n >>> Press anything to exit." << std::endl;
         std::cin >> op;
+
     }
     return 0;
 }
