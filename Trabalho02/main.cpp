@@ -81,8 +81,12 @@ void printCharVector(const char *vector){
  * @param pResult vector that will be filled up with the index in which those subsequences starts.
  */
 void bruteForceAlgorithm(const char* pText, const char* pPattern, int *pResult){
-    int goThroughPattern = 0;      // It counts in which index we are in the pattern;
     const char *goThroughText = pText;      // It counts in which index we are in the text;
+    int countText = countCStringSize(pText);
+    const char *finalText = pText + countText;
+    int porcentText;
+    int porcentAux = -1;
+    int aux = 0;
 
     while(*goThroughText != '\0'){
         if(*goThroughText == *pPattern){
@@ -98,8 +102,28 @@ void bruteForceAlgorithm(const char* pText, const char* pPattern, int *pResult){
             }
         }
         goThroughText++;
-    }
+        porcentText = (int)((countText - (double)(finalText - goThroughText))*100/countText);
+        if (porcentAux != porcentText) {
+            std::cout << "[";
 
+            for (int i = 0; i <= porcentText / 10; i++) {
+                std::cout << "=";
+                aux++;
+            }
+            std::cout << ">";
+            for (int j = 0; j <= (10 - aux); j++) {
+                std::cout << ".";
+            }
+            std::cout << "] ";
+
+            std::cout << porcentText;
+            std::cout << "%";
+            std::cout << "\r";
+            aux = 0;
+        }
+        porcentAux = porcentText;
+    }
+    std::cout << std::endl;
     *pResult = -1;
 }
 
@@ -149,6 +173,12 @@ void knuthMorrisPratt(const char* pText, const char* pPattern, int *pResult){
     int goThroughText = 0;
     int goThroughPattern = 0;
 
+    int countText = countCStringSize(pText);
+    int porcentText;
+    int porcentAux = -1;
+    int aux = 0;
+
+
     computationOfPi(pPattern, piVector);
 
     while(pText[goThroughText] != '\0'){
@@ -172,8 +202,27 @@ void knuthMorrisPratt(const char* pText, const char* pPattern, int *pResult){
                 goThroughPattern++;
             }
         }
-    }
+        porcentText = (int)((double)(countText - (countText - goThroughText))*100/countText);
+        if (porcentAux != porcentText) {
+            std::cout << "[";
+            for (int i = 0; i <= porcentText / 10; i++) {
+                std::cout << "=";
+                aux++;
+            }
+            std::cout << ">";
+            for (int j = 0; j <= (10 - aux); j++) {
+                std::cout << ".";
+            }
+            std::cout << "] ";
 
+            std::cout << porcentText;
+            std::cout << "%";
+            std::cout << "\r";
+            aux = 0;
+        }
+        porcentAux = porcentText;
+    }
+    std::cout << std::endl;
     *pResult = -1;
     delete[] piVector;
 
@@ -368,7 +417,7 @@ int main() {
             int *resultKnuth = new int[textSize];
 
             generateVectorA(text, textSize, 0);
-            generateVectorA(pattern, patternSize, 1);
+            generateVectorA(pattern, patternSize - 1, 1);
 
 //            printCharVector(text);
 //            printCharVector(pattern);
