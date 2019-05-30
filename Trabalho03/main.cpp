@@ -1,9 +1,10 @@
 #include <iostream>
 #include <map>
-#include "Heap.cpp"
+#include "Heap.h"
 #include <fstream>
 typedef map<char, int> dict;
 typedef pair<char, int> par;
+
 
 dict countChar(dict pDict, string pText){
     int i = 0;
