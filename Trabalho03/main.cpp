@@ -1,46 +1,60 @@
 #include <iostream>
-#include <map>
 #include "Heap.h"
 #include <fstream>
-typedef map<char, int> dict;
-typedef pair<char, int> par;
 
-
-dict countChar(dict pDict, string pText){
+vector<huffmanElement> countChar(vector<huffmanElement> pElements, string pText){
     int i = 0;
+    bool found = false;
     while(pText[i] != '\0'){
-        if (pDict[pText[i]])
-            pDict[pText[i]] += 1;
-        else
-            pDict[pText[i]] = 1;
+
+        for(int j = 0; j < pElements.size(); j++){
+            if(pElements[j].letter == pText[i]){
+                pElements[j].quantity += 1;
+                found = true;
+            }
+        }
+
+        if (!found){
+            huffmanElement aux = {pText[i],1};
+            pElements.push_back(aux);
+        }
+
         i++;
+        found = false;
     }
-    return pDict;
+    return pElements;
 }
 
-dict readFile(const string pFileName){
+vector<huffmanElement> readFile(const string pFileName){
     ifstream inputFile(pFileName);
-    dict dictFile;
+    vector<huffmanElement> letters;
+    vector<huffmanElement> aux;
     string fileLine;
-    cout << pFileName << endl;
     if (!inputFile){
         cout << "Failed to open file\n";
-        return dictFile;
+        return letters;
     }
 
-    while (std::getline(inputFile, fileLine))
-        dictFile = countChar(dictFile, fileLine);
-
-    return dictFile;
+    while (std::getline(inputFile, fileLine)) {
+        aux = countChar(letters, fileLine);
+        letters.clear();
+        letters = aux;
+        aux.clear();
+    }
+    return letters;
 }
 
 
 int main() {
     string fileName = "Test.txt";
-    dict test = readFile(fileName);
-
-    for(par element: test){
-        cout << element.first << " : " << element.second << endl;
+    vector<huffmanElement> test = readFile(fileName);
+    Heap huffmanHeap;
+    //huffmanHeap.buildHeap(test, test.size());
+    if(test.empty()){
+        cout << "empty" << endl;
+    }
+    for(int j = 0; j < test.size(); j++){
+        cout << test[j].letter << " : " << test[j].quantity << endl;
     }
 
     return 0;

@@ -2,16 +2,26 @@
 #define TRABALHO03_HEAP_H
 
 #include <stdio.h>
+#include <map>
+#include <vector>
+
 using namespace std;
+typedef pair<char, int> par;
+typedef map<char, int> dict;
+
+struct huffmanElement{
+    char letter;
+    int quantity;
+};
 
 class Heap {
 public:
 
     int heapSize;
-    int* heap;
+    vector<huffmanElement> heap;
 
-    void buildHeap(int *pVector, int pSize);
-    void heapify(int* pVector, int pIndex);
+    void buildHeap(vector<huffmanElement> pVector, int pSize);
+    void heapify(vector<huffmanElement> pVector, int pIndex);
 
     int getParent(int pIndex);
 
@@ -19,13 +29,13 @@ public:
 
     int getRight(int pIndex);
 
-    void insert(int x);
+    void insert(huffmanElement element);
 
     int minimum();
 
     int extractMinimum();
 
-    void Swap(int *p, int pIndex, int largest);
+    void Swap(vector<huffmanElement> pVector, int pIndex, int largest);
 };
 
 #endif
