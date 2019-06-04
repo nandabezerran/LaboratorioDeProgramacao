@@ -49,12 +49,12 @@ int main() {
     string fileName = "Test.txt";
     vector<huffmanElement> test = readFile(fileName);
     Heap huffmanHeap;
-    //huffmanHeap.buildHeap(test, test.size());
+    huffmanHeap.buildHeap(test, test.size());
     if(test.empty()){
         cout << "empty" << endl;
     }
-    for(int j = 0; j < test.size(); j++){
-        cout << test[j].letter << " : " << test[j].quantity << endl;
+    for(int j = 0; j < huffmanHeap.heap.size(); j++){
+        cout << huffmanHeap.heap[j].letter << " : " << huffmanHeap.heap[j].quantity << endl;
     }
 
     return 0;

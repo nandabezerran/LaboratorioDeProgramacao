@@ -21,7 +21,7 @@ public:
     vector<huffmanElement> heap;
 
     void buildHeap(vector<huffmanElement> pVector, int pSize);
-    void heapify(vector<huffmanElement> pVector, int pIndex);
+    vector<huffmanElement> heapify(vector<huffmanElement> pVector, int pIndex);
 
     int getParent(int pIndex);
 
@@ -35,7 +35,7 @@ public:
 
     int extractMinimum();
 
-    void Swap(vector<huffmanElement> pVector, int pIndex, int largest);
+    vector<huffmanElement> Swap(vector<huffmanElement> pVector, int pIndex, int largest);
 };
 
 #endif
