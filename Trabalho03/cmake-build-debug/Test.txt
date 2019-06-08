@@ -1,0 +1,2 @@
+﻿Arquivo teste para codificacao de huffman
+amo o celito

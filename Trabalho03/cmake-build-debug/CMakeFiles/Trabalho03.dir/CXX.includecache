@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho03/Heap.h
+stdio.h
+-
+map
+-
+vector
+-
+
+C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho03/main.cpp
+iostream
+-
+Heap.h
+C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho03/Heap.h
+fstream
+-
+

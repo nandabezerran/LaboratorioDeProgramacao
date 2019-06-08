@@ -6,22 +6,26 @@
 #include <vector>
 
 using namespace std;
-typedef pair<char, int> par;
 typedef map<char, int> dict;
+typedef pair<char, int> par;
 
-struct huffmanElement{
+
+struct heapNode{
     char letter;
     int quantity;
+    heapNode *left;
+    heapNode *right;
 };
 
 class Heap {
 public:
 
     int heapSize;
-    vector<huffmanElement> heap;
+    heapNode** heap;
 
-    void buildHeap(vector<huffmanElement> pVector, int pSize);
-    vector<huffmanElement> heapify(vector<huffmanElement> pVector, int pIndex);
+    explicit Heap(int pHeapSize);
+    void buildHeap(heapNode** pVector);
+    void heapify(heapNode** &pVector, int pIndex);
 
     int getParent(int pIndex);
 
@@ -29,13 +33,13 @@ public:
 
     int getRight(int pIndex);
 
-    void insert(huffmanElement element);
+    void insert(heapNode* element);
 
-    int minimum();
+    heapNode* minimum();
 
-    int extractMinimum();
+    heapNode* extractMinimum();
 
-    vector<huffmanElement> Swap(vector<huffmanElement> pVector, int pIndex, int largest);
+    void swap(heapNode** &pVector, int pIndex, int largest);
 };
 
 #endif

@@ -1,61 +1,94 @@
 #include <iostream>
 #include "Heap.h"
 #include <fstream>
-
-vector<huffmanElement> countChar(vector<huffmanElement> pElements, string pText){
-    int i = 0;
-    bool found = false;
-    while(pText[i] != '\0'){
-
-        for(int j = 0; j < pElements.size(); j++){
-            if(pElements[j].letter == pText[i]){
-                pElements[j].quantity += 1;
-                found = true;
-            }
-        }
-
-        if (!found){
-            huffmanElement aux = {pText[i],1};
-            pElements.push_back(aux);
-        }
-
-        i++;
-        found = false;
-    }
-    return pElements;
+heapNode* newNode(char pLetter, int pQuantity){
+    auto newNode = (heapNode *)malloc(sizeof(heapNode));
+    newNode->letter = pLetter;
+    newNode->quantity = pQuantity;
+    newNode->left = nullptr;
+    newNode->right = nullptr;
+    return newNode;
 }
 
-vector<huffmanElement> readFile(const string pFileName){
+Heap buildHeap(dict pDict){
+    int heapSize = pDict.size();
+    auto aux = (heapNode**)malloc(sizeof(heapNode *) * heapSize);
+    Heap heap = Heap(heapSize);
+    int i = 0;
+
+    for (par element: pDict) {
+        aux[i] = newNode(element.first, element.second);
+        i++;
+    }
+
+    heap.heapSize = heapSize;
+    heap.buildHeap(aux);
+
+    return heap;
+
+}
+
+dict countChar(dict pDict, string pText){
+    int i = 0;
+    while(pText[i] != '\0'){
+        if (pDict[pText[i]])
+            pDict[pText[i]] += 1;
+        else
+            pDict[pText[i]] = 1;
+        i++;
+    }
+    return pDict;
+}
+
+dict readFile(const string pFileName){
     ifstream inputFile(pFileName);
-    vector<huffmanElement> letters;
-    vector<huffmanElement> aux;
+    dict dictFile;
     string fileLine;
+    cout << pFileName << endl;
     if (!inputFile){
         cout << "Failed to open file\n";
-        return letters;
+        return dictFile;
     }
 
-    while (std::getline(inputFile, fileLine)) {
-        aux = countChar(letters, fileLine);
-        letters.clear();
-        letters = aux;
-        aux.clear();
-    }
-    return letters;
+    while (std::getline(inputFile, fileLine))
+        dictFile = countChar(dictFile, fileLine);
+
+    return dictFile;
 }
+
+//heapNode buildHuffmanTree(string pFileName){
+//    vector<heapNode> elements = readFile(pFileName);
+//    Heap heap = Heap(elements.size());
+//    pHeap.buildHeap(elements);
+//    heapNode left;
+//    heapNode right;
+//    heapNode sumOfNodes;
+//    while (pHeap.heapSize != 1){
+//        left = pHeap.heap[pHeap.extractMinimum()];
+//        right = pHeap.heap[pHeap.extractMinimum()];
+//        sumOfNodes = {'$', left.quantity+right.quantity, &left, &right};
+//        pHeap.insert(sumOfNodes);
+//
+//    }
+//
+//    return pHeap.minimum();
+//
+//}
 
 
 int main() {
     string fileName = "Test.txt";
-    vector<huffmanElement> test = readFile(fileName);
-    Heap huffmanHeap;
-    huffmanHeap.buildHeap(test, test.size());
-    if(test.empty()){
-        cout << "empty" << endl;
+    dict test = readFile(fileName);
+    for(par element: test){
+        cout << element.first << " : " << element.second << endl;
     }
-    for(int j = 0; j < huffmanHeap.heap.size(); j++){
-        cout << huffmanHeap.heap[j].letter << " : " << huffmanHeap.heap[j].quantity << endl;
+    Heap heap = buildHeap(test);
+
+
+    for(int i=0; i<heap.heapSize; i++ ){
+        cout << heap.heap[i]->letter << ":" << heap.heap[i]->quantity << endl;
     }
+
 
     return 0;
 }
