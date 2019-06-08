@@ -56,39 +56,31 @@ dict readFile(const string pFileName){
     return dictFile;
 }
 
-//heapNode buildHuffmanTree(string pFileName){
-//    vector<heapNode> elements = readFile(pFileName);
-//    Heap heap = Heap(elements.size());
-//    pHeap.buildHeap(elements);
-//    heapNode left;
-//    heapNode right;
-//    heapNode sumOfNodes;
-//    while (pHeap.heapSize != 1){
-//        left = pHeap.heap[pHeap.extractMinimum()];
-//        right = pHeap.heap[pHeap.extractMinimum()];
-//        sumOfNodes = {'$', left.quantity+right.quantity, &left, &right};
-//        pHeap.insert(sumOfNodes);
-//
-//    }
-//
-//    return pHeap.minimum();
-//
-//}
+heapNode* buildHuffmanTree(string pFileName){
+    dict elements = readFile(pFileName);
+    Heap heap = buildHeap(elements);
+    heapNode *left;
+    heapNode *right;
+    heapNode *sumOfNodes;
+    while (heap.heapSize != 1){
+        left = heap.extractMinimum();
+        right = heap.extractMinimum();
+        sumOfNodes = newNode('$', left->quantity+right->quantity);
+        sumOfNodes->right=right;
+        sumOfNodes->left=left;
+        heap.insert(sumOfNodes);
+
+    }
+
+    return heap.extractMinimum();
+
+}
 
 
 int main() {
     string fileName = "Test.txt";
-    dict test = readFile(fileName);
-    for(par element: test){
-        cout << element.first << " : " << element.second << endl;
-    }
-    Heap heap = buildHeap(test);
+    heapNode* minimunHuffman = buildHuffmanTree(fileName);
 
-
-    for(int i=0; i<heap.heapSize; i++ ){
-        cout << heap.heap[i]->letter << ":" << heap.heap[i]->quantity << endl;
-    }
-
-
+    cout << "blabla" << endl;
     return 0;
 }
