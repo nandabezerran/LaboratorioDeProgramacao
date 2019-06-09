@@ -7,7 +7,9 @@
 
 using namespace std;
 typedef map<char, int> dict;
+typedef map<char, string> dictChar;
 typedef pair<char, int> par;
+typedef pair<char, string> parChar;
 
 
 struct heapNode{

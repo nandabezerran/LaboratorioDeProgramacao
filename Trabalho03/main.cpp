@@ -44,7 +44,6 @@ dict readFile(const string pFileName){
     ifstream inputFile(pFileName);
     dict dictFile;
     string fileLine;
-    cout << pFileName << endl;
     if (!inputFile){
         cout << "Failed to open file\n";
         return dictFile;
@@ -76,11 +75,30 @@ heapNode* buildHuffmanTree(string pFileName){
 
 }
 
+dictChar generateCodes(heapNode* element , string code, dictChar codes){
+    if (!element->left && !element->right) {
+        codes[element->letter] = code;
+    }
+
+    else{
+        codes = generateCodes(element->left, code+ "0", codes);
+        codes = generateCodes(element->right, code+ "1", codes);
+    }
+
+    return codes;
+}
+
 
 int main() {
     string fileName = "Test.txt";
     heapNode* minimunHuffman = buildHuffmanTree(fileName);
+    string code;
+    dictChar dictCode;
 
-    cout << "blabla" << endl;
+    dictCode = generateCodes(minimunHuffman, code, dictCode);
+    for (parChar element: dictCode){
+        cout << element.first << ":" << element.second<< endl;
+    }
+
     return 0;
 }
