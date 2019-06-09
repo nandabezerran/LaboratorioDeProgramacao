@@ -87,18 +87,61 @@ dictChar generateCodes(heapNode* element , string code, dictChar codes){
 
     return codes;
 }
+void writeBinaryTree(heapNode *p, ofstream &out) {
+    if (!p) {
+        out << "# ";
+    } else {
+        out << p->letter << " ";
+        writeBinaryTree(p->left, out);
+        writeBinaryTree(p->right, out);
+    }
+}
 
+void encodingFile(string pOriginalFile, string CompressFile, ofstream &out, dictChar pDictCode){
+    ifstream inputFile(pOriginalFile);
+    string fileLine;
+    if (!inputFile){
+        cout << "Failed to open file\n";
+        return;
+    }
+
+    while (std::getline(inputFile, fileLine)) {
+        for (char letter : fileLine) {
+            for (parChar element: pDictCode) {
+                if (letter == element.first) {
+                    out << element.second;
+                }
+            }
+        }
+        out << "\n";
+    }
+}
+
+void compressFile(string pFileName){
+    heapNode* minimunHuffman = buildHuffmanTree(pFileName);
+    string code;
+    dictChar dictCode;
+    dictCode = generateCodes(minimunHuffman, code, dictCode);
+    ofstream myfile;
+    myfile.open ("filename.huf");
+    writeBinaryTree(minimunHuffman, myfile);
+    myfile << "\n";
+    encodingFile(pFileName,"filename.huf", myfile, dictCode);
+    myfile.close();
+
+}
 
 int main() {
     string fileName = "Test.txt";
-    heapNode* minimunHuffman = buildHuffmanTree(fileName);
-    string code;
-    dictChar dictCode;
-
-    dictCode = generateCodes(minimunHuffman, code, dictCode);
-    for (parChar element: dictCode){
-        cout << element.first << ":" << element.second<< endl;
-    }
+//    heapNode* minimunHuffman = buildHuffmanTree(fileName);
+//    string code;
+//    dictChar dictCode;
+//
+//    dictCode = generateCodes(minimunHuffman, code, dictCode);
+//    for (parChar element: dictCode){
+//        cout << element.first << ":" << element.second<< endl;
+//    }
+    compressFile(fileName);
 
     return 0;
 }
