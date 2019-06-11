@@ -89,9 +89,9 @@ dictChar generateCodes(heapNode* element , string code, dictChar codes){
 }
 void writeBinaryTree(heapNode *p, ofstream &out) {
     if (!p) {
-        out << "# ";
+        out << "#";
     } else {
-        out << p->letter << " ";
+        out << p->letter;
         writeBinaryTree(p->left, out);
         writeBinaryTree(p->right, out);
     }
@@ -131,17 +131,66 @@ void compressFile(string pFileName){
 
 }
 
+void readBinaryTree(heapNode *&p, string pFileLine, int &pos) {
+    if (pos >= pFileLine.size()){
+        return;
+    }
+    char token = pFileLine[pos];
+    if (token == '#') {
+        pos++;
+        return;
+    }
+    p = newNode(token, 0);
+    pos++;
+    readBinaryTree(p->left, pFileLine, pos);
+    readBinaryTree(p->right, pFileLine, pos);
+}
+
+void decodingFile(heapNode *root, heapNode *element, string fileLine, string pText){
+    if(fileLine.empty()){
+        return;
+    }
+    while(element->left || element->right){
+        if (fileLine[0] == '0'){
+            fileLine.erase(fileLine.begin());
+            decodingFile(root, element->left, fileLine, pText);
+        }
+        if (fileLine[0] == '1'){
+            fileLine.erase(fileLine.begin());
+            decodingFile(root, element->right, fileLine, pText);
+        }
+    }
+    pText += element->letter;
+    decodingFile(root, root, fileLine, pText);
+}
+
+void decompressFile(string pFileName){
+    ifstream inputFile(pFileName);
+    string fileLine;
+    string pText;
+    if (!inputFile){
+        cout << "Failed to open file\n";
+        return;
+    }
+    heapNode* root;
+    std::getline(inputFile,fileLine);
+    int pos = 0;
+    readBinaryTree(root, fileLine, pos);
+
+    while (std::getline(inputFile, fileLine)) {
+        decodingFile(root, root, fileLine,pText);
+        pText += "\n";
+    }
+    inputFile.close();
+    ofstream myfile;
+    myfile.open (pFileName+"1"+".txt");
+    myfile << pText;
+    myfile.close();
+}
 int main() {
     string fileName = "Test.txt";
-//    heapNode* minimunHuffman = buildHuffmanTree(fileName);
-//    string code;
-//    dictChar dictCode;
-//
-//    dictCode = generateCodes(minimunHuffman, code, dictCode);
-//    for (parChar element: dictCode){
-//        cout << element.first << ":" << element.second<< endl;
-//    }
-    compressFile(fileName);
+    //compressFile(fileName);
+    decompressFile("filename.huf");
 
     return 0;
 }
