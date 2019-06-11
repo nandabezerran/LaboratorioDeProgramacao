@@ -146,28 +146,26 @@ void readBinaryTree(heapNode *&p, string pFileLine, int &pos) {
     readBinaryTree(p->right, pFileLine, pos);
 }
 
-void decodingFile(heapNode *root, heapNode *element, string fileLine, string pText){
-    if(fileLine.empty()){
-        return;
-    }
-    while(element->left || element->right){
-        if (fileLine[0] == '0'){
-            fileLine.erase(fileLine.begin());
-            decodingFile(root, element->left, fileLine, pText);
+string decodingFile(heapNode *root, string pFileName){
+    string text;
+    struct heapNode* actualNode = root;
+    for (char letter : pFileName) {
+        if (letter == '0')
+            actualNode = actualNode->left;
+        else
+            actualNode = actualNode->right;
+
+        if (actualNode->left== nullptr and actualNode->right== nullptr){
+            text += actualNode->letter;
+            actualNode = root;
         }
-        if (fileLine[0] == '1'){
-            fileLine.erase(fileLine.begin());
-            decodingFile(root, element->right, fileLine, pText);
-        }
     }
-    pText += element->letter;
-    decodingFile(root, root, fileLine, pText);
+    return text+'\0';
 }
 
 void decompressFile(string pFileName){
     ifstream inputFile(pFileName);
     string fileLine;
-    string pText;
     if (!inputFile){
         cout << "Failed to open file\n";
         return;
@@ -176,20 +174,23 @@ void decompressFile(string pFileName){
     std::getline(inputFile,fileLine);
     int pos = 0;
     readBinaryTree(root, fileLine, pos);
-
-    while (std::getline(inputFile, fileLine)) {
-        decodingFile(root, root, fileLine,pText);
-        pText += "\n";
-    }
-    inputFile.close();
+    string pText;
     ofstream myfile;
     myfile.open (pFileName+"1"+".txt");
-    myfile << pText;
+    while (std::getline(inputFile, fileLine)) {
+        pText = decodingFile(root, fileLine);
+        pText += "\n";
+        myfile << pText;
+        pText.erase();
+
+    }
+    inputFile.close();
     myfile.close();
 }
+
 int main() {
     string fileName = "Test.txt";
-    //compressFile(fileName);
+    compressFile(fileName);
     decompressFile("filename.huf");
 
     return 0;
