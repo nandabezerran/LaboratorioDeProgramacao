@@ -1,6 +1,11 @@
 #include <iostream>
 #include "Heap.h"
 #include <fstream>
+#include <sstream>
+
+#define NULL_CHAR (char)219
+#define SUM_NODES (char)192
+#define BYTE 8
 heapNode* newNode(char pLetter, int pQuantity){
     auto newNode = (heapNode *)malloc(sizeof(heapNode));
     newNode->letter = pLetter;
@@ -28,15 +33,11 @@ Heap buildHeap(dict pDict){
 
 }
 
-dict countChar(dict pDict, string pText){
-    int i = 0;
-    while(pText[i] != '\0'){
-        if (pDict[pText[i]])
-            pDict[pText[i]] += 1;
-        else
-            pDict[pText[i]] = 1;
-        i++;
-    }
+dict countChar(dict pDict, char pLetter){
+    if (pDict[pLetter])
+        pDict[pLetter] += 1;
+    else
+        pDict[pLetter] = 1;
     return pDict;
 }
 
@@ -49,8 +50,9 @@ dict readFile(const string pFileName){
         return dictFile;
     }
 
-    while (std::getline(inputFile, fileLine))
-        dictFile = countChar(dictFile, fileLine);
+    char letter;
+    while (inputFile >> noskipws >> letter)
+        dictFile = countChar(dictFile, letter);
 
     return dictFile;
 }
@@ -64,7 +66,7 @@ heapNode* buildHuffmanTree(string pFileName){
     while (heap.heapSize != 1){
         left = heap.extractMinimum();
         right = heap.extractMinimum();
-        sumOfNodes = newNode('$', left->quantity+right->quantity);
+        sumOfNodes = newNode(SUM_NODES, left->quantity+right->quantity);
         sumOfNodes->right=right;
         sumOfNodes->left=left;
         heap.insert(sumOfNodes);
@@ -87,63 +89,95 @@ dictChar generateCodes(heapNode* element , string code, dictChar codes){
 
     return codes;
 }
-void writeBinaryTree(heapNode *p, ofstream &out) {
+
+void writeBinaryTree(heapNode *p, stringstream &out) {
     if (!p) {
-        out << "#";
+        out << NULL_CHAR;
     } else {
         out << p->letter;
-        writeBinaryTree(p->left, out);
-        writeBinaryTree(p->right, out);
+        if(p->letter == SUM_NODES) {
+            writeBinaryTree(p->left, out);
+            writeBinaryTree(p->right, out);
+        }
     }
 }
 
-void encodingFile(string pOriginalFile, string CompressFile, ofstream &out, dictChar pDictCode){
+void encodingFile(string pOriginalFile, string CompressFile, stringstream &out, dictChar pDictCode){
     ifstream inputFile(pOriginalFile);
     string fileLine;
     if (!inputFile){
         cout << "Failed to open file\n";
         return;
     }
-
-    while (std::getline(inputFile, fileLine)) {
-        for (char letter : fileLine) {
-            for (parChar element: pDictCode) {
-                if (letter == element.first) {
-                    out << element.second;
-                }
+    char letter;
+    while (inputFile >> noskipws >> letter) {
+        for (parChar element: pDictCode) {
+            if (letter == element.first) {
+                out << element.second;
             }
         }
-        out << "\n";
     }
 }
 
-void compressFile(string pFileName){
+void compressFile(string pFileName, string pExitFile){
     heapNode* minimunHuffman = buildHuffmanTree(pFileName);
     string code;
     dictChar dictCode;
     dictCode = generateCodes(minimunHuffman, code, dictCode);
+
     ofstream myfile;
-    myfile.open ("filename.huf");
-    writeBinaryTree(minimunHuffman, myfile);
-    myfile << "\n";
-    encodingFile(pFileName,"filename.huf", myfile, dictCode);
+    std::stringstream buffer;
+    myfile.open(pExitFile, std::ios::binary);
+    writeBinaryTree(minimunHuffman, buffer);
+
+    int size = buffer.str().length();
+    myfile.write((char *)&size, sizeof(int));
+    myfile.write(buffer.str().c_str(), size);
+
+    stringstream encondingAux;
+    encodingFile(pFileName,pExitFile, encondingAux, dictCode);
+    string encodedString = encondingAux.str();
+
+    int bytesPos = 0;
+    auto numBits = (long int)encodedString.length();
+    int extraZeros =  BYTE - (numBits % BYTE);
+    myfile.write((char *)&numBits, sizeof(long int));
+
+    for (int j = 0; j < extraZeros; ++j) {
+        encodedString += '0';
+    }
+
+    while(bytesPos + BYTE <= numBits + extraZeros) {
+        char c = 0;
+        for (int i = bytesPos; i < bytesPos + BYTE; ++i) {
+            c = c << 1;
+            if (encodedString[i] == '1') {
+                c = c | (char) 1;
+            }
+        }
+        bytesPos+= BYTE;
+        myfile.write(&c, sizeof(char));
+    }
     myfile.close();
 
 }
 
-void readBinaryTree(heapNode *&p, string pFileLine, int &pos) {
-    if (pos >= pFileLine.size()){
+void readBinaryTree(heapNode *&p, ifstream &pFile, int &pTreeStringSize, int &pPos) {
+    if (pPos >= pTreeStringSize){
         return;
     }
-    char token = pFileLine[pos];
-    if (token == '#') {
-        pos++;
+    char token = 0;
+    pFile.read(&token, sizeof(char));
+    if (token == NULL_CHAR) {
+        pPos++;
         return;
     }
     p = newNode(token, 0);
-    pos++;
-    readBinaryTree(p->left, pFileLine, pos);
-    readBinaryTree(p->right, pFileLine, pos);
+    pPos++;
+    if(token == SUM_NODES) {
+        readBinaryTree(p->left, pFile, pTreeStringSize, pPos);
+        readBinaryTree(p->right, pFile, pTreeStringSize, pPos);
+    }
 }
 
 string decodingFile(heapNode *root, string pFileName){
@@ -164,24 +198,44 @@ string decodingFile(heapNode *root, string pFileName){
 }
 
 void decompressFile(string pFileName){
-    ifstream inputFile(pFileName);
+    ifstream inputFile(pFileName, std::ios::binary);
     string fileLine;
     if (!inputFile){
         cout << "Failed to open file\n";
         return;
     }
     heapNode* root;
-    std::getline(inputFile,fileLine);
+
     int pos = 0;
-    readBinaryTree(root, fileLine, pos);
+    int treeStringSize = 0;
+    inputFile.read((char *)&treeStringSize, sizeof(int));
+    readBinaryTree(root, inputFile, treeStringSize, pos);
+
+    long int numBits = 0;
+    inputFile.read((char*)&numBits, sizeof(long int));
+    cout << numBits << endl;
+
     string pText;
     ofstream myfile;
     myfile.open (pFileName+"1"+".txt");
-    while (std::getline(inputFile, fileLine)) {
-        pText = decodingFile(root, fileLine);
-        pText += "\n";
-        myfile << pText;
-        pText.erase();
+    char currByte;
+    heapNode* actualNode = root;
+    for (long int i = 0; i < numBits ; ++i) {
+        long int currBitPos = i % BYTE;
+        if(currBitPos == 0) {
+            inputFile.read(&currByte, sizeof(char));
+        }
+        if((currByte >> ((BYTE - 1) - i)) & (char)1){
+            actualNode = actualNode->right;
+        }
+        //1101 0110
+        else
+            actualNode = actualNode->left;
+
+        if (actualNode->left== nullptr and actualNode->right== nullptr){
+            myfile << actualNode->letter;
+            actualNode = root;
+        }
 
     }
     inputFile.close();
@@ -190,7 +244,7 @@ void decompressFile(string pFileName){
 
 int main() {
     string fileName = "Test.txt";
-    compressFile(fileName);
+    compressFile(fileName, "filename.huf");
     decompressFile("filename.huf");
 
     return 0;
