@@ -3,9 +3,15 @@
 #include <fstream>
 #include <sstream>
 
-#define NULL_CHAR (char)219
-#define SUM_NODES (char)192
-#define BYTE 8
+#define NULL_CHAR (char)219 //Define a char to represent a null node
+#define SUM_NODES (char)192 //Define a char to represent the node which is a sum of two other nodes
+#define BYTE 8 //To make the code more clear, define a name to represent the size of a byte
+
+/* It creates a ne heapNode structure, already allocating the memory
+ * @param pLettter the letter of the text 
+ * @param pQuantity the number of occurrencies of the pLetter
+ * @return heapNode* to the new node created
+ */
 heapNode* newNode(char pLetter, int pQuantity){
     auto newNode = (heapNode *)malloc(sizeof(heapNode));
     newNode->letter = pLetter;
@@ -180,23 +186,6 @@ void readBinaryTree(heapNode *&p, ifstream &pFile, int &pTreeStringSize, int &pP
     }
 }
 
-string decodingFile(heapNode *root, string pFileName){
-    string text;
-    struct heapNode* actualNode = root;
-    for (char letter : pFileName) {
-        if (letter == '0')
-            actualNode = actualNode->left;
-        else
-            actualNode = actualNode->right;
-
-        if (actualNode->left== nullptr and actualNode->right== nullptr){
-            text += actualNode->letter;
-            actualNode = root;
-        }
-    }
-    return text+'\0';
-}
-
 void decompressFile(string pFileName){
     ifstream inputFile(pFileName, std::ios::binary);
     string fileLine;
@@ -217,7 +206,7 @@ void decompressFile(string pFileName){
 
     string pText;
     ofstream myfile;
-    myfile.open (pFileName+"1"+".txt");
+    myfile.open (pFileName+"1");
     char currByte;
     heapNode* actualNode = root;
     for (long int i = 0; i < numBits ; ++i) {
@@ -225,7 +214,7 @@ void decompressFile(string pFileName){
         if(currBitPos == 0) {
             inputFile.read(&currByte, sizeof(char));
         }
-        if((currByte >> ((BYTE - 1) - i)) & (char)1){
+        if((currByte >> ((BYTE - 1) - currBitPos)) & (char)1){
             actualNode = actualNode->right;
         }
         //1101 0110
