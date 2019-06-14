@@ -251,7 +251,7 @@ void readBinaryTree(heapNode *&p, ifstream &pFile, int &pTreeStringSize, int &pP
 /* It decompress the file, decoding the codes presents in the compressed file
  * @param pFileName the name of the file we want to decompress
  */
-void decompressFile(string pFileName){
+void decompressFile(string pFileName, string fileOname){
     ifstream inputFile(pFileName, std::ios::binary);
 
     if (!inputFile){
@@ -271,7 +271,7 @@ void decompressFile(string pFileName){
     inputFile.read((char*)&numBits, sizeof(long int));
 
     ofstream myfile;
-    myfile.open (pFileName+"1");
+    myfile.open ("Decompressed/" + fileOname);
     char currByte;
     heapNode* actualNode = root;
 
@@ -302,9 +302,16 @@ void decompressFile(string pFileName){
 }
 
 int main() {
-    string fileName = "Test.txt";
-    compressFile(fileName, "filename.huf");
-    decompressFile("filename.huf");
+    string fileName;
+    cout << "Enter the name of the file: " << endl;
+    cin >> fileName;
+
+    string fileAdress = "Files/"+fileName;
+    string aux = fileName;
+    string compressedFile = "Compressed/" + aux.erase(aux.length() - 3, aux.length()) + "huf";
+
+    compressFile(fileAdress, compressedFile);
+    decompressFile(compressedFile, fileName);
 
     return 0;
 }
