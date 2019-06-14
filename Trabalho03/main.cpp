@@ -5,9 +5,11 @@
 #include <time.h>
 #include <chrono>
 
-#define NULL_CHAR (char)219 //Define a char to represent a null node
-#define SUM_NODES (char)192 //Define a char to represent the node which is a sum of two other nodes
+#define NULL_CHAR '#' //Define a char to represent a null node
+#define SUM_NODES '$' //Define a char to represent the node which is a sum of two other nodes
+#define SPECIAL_CHAR '@'
 #define BYTE 8 //To make the code more clear, define a name to represent the size of a byte
+
 
 /* It creates a new heapNode structure, already allocating the memory
  * @param pLettter the letter of the text 
@@ -69,7 +71,6 @@ dict countChar(dict pDict, char pLetter){
 dict readFile(const string pFileName){
     ifstream inputFile(pFileName, std::ios::binary);
     dict dictFile;
-    string fileLine;
     int currByte;
 
     if (!inputFile){
@@ -141,12 +142,18 @@ dictChar generateCodes(heapNode* pElement , string pCode, dictChar pCodes){
  * @param *p a heapNode which starts at the root and recursively descends on the tree
  * @param &out a stringstream which is the formed string
  */
-void writeBinaryTree(heapNode *p, stringstream &out) {
+void writeBinaryTree(heapNode *p, vector<char> &out) {
     if (!p) {
-        out << NULL_CHAR;
+        out.push_back(NULL_CHAR);
     } else {
-        out << p->letter;
-        if(p->letter == SUM_NODES) {
+        if(p->left == nullptr && p->right == nullptr) {
+            if (p->letter == NULL_CHAR || p->letter == SUM_NODES || p->letter == SPECIAL_CHAR) {
+                out.push_back(SPECIAL_CHAR);
+            }
+            out.push_back(p->letter);
+        }
+        else {
+            out.push_back(p->letter);
             writeBinaryTree(p->left, out);
             writeBinaryTree(p->right, out);
         }
@@ -187,17 +194,17 @@ void compressFile(string pFileName, string pExitFile){
     dictCode = generateCodes(minimunHuffman, code, dictCode);
 
     ofstream myfile;
-    std::stringstream buffer;
+    vector<char> buffer;
     myfile.open(pExitFile, std::ios::binary);
 
 
     writeBinaryTree(minimunHuffman, buffer);
     // The size of the string containing our tree structure, to know exactly how much we need to read
     // from the file to get all the string, and then we save in the beginning of the file;
-    int size = buffer.str().length(); 
+    int size = buffer.size();
     myfile.write((char *)&size, sizeof(int)); 
     // When we save the size of the tree its time to save the whole tree string in the file
-    myfile.write(buffer.str().c_str(), size);
+    myfile.write(buffer.data(), size);
 
 
     stringstream encondingAux;
@@ -241,21 +248,25 @@ void readBinaryTree(heapNode *&p, ifstream &pFile, int &pTreeStringSize, int &pP
     if (pPos >= pTreeStringSize){
         return;
     }
-
     char token = 0;
-    pFile.read(&token, sizeof(char)); 
-
+    pFile.read(&token, sizeof(char));
     if (token == NULL_CHAR) {
         pPos++;
         return;
     }
-
-    p = newNode(token, 0);
-    pPos++;
-
-    if(token == SUM_NODES) {
-        readBinaryTree(p->left, pFile, pTreeStringSize, pPos);
-        readBinaryTree(p->right, pFile, pTreeStringSize, pPos);
+    if(token == SPECIAL_CHAR){
+        pFile.read(&token, sizeof(char));
+        pPos++;
+        p = newNode(token, 0);
+        pPos++;
+    }
+    else {
+        p = newNode(token, 0);
+        pPos++;
+        if(token == SUM_NODES){
+            readBinaryTree(p->left, pFile, pTreeStringSize, pPos);
+            readBinaryTree(p->right, pFile, pTreeStringSize, pPos);
+        }
     }
 }
 
@@ -282,7 +293,7 @@ void decompressFile(string pFileName, string fileOname){
     inputFile.read((char*)&numBits, sizeof(long int));
 
     ofstream myfile;
-    myfile.open (fileOname);
+    myfile.open(fileOname, std::ios::binary);
     char currByte;
     heapNode* actualNode = root;
 
@@ -303,7 +314,7 @@ void decompressFile(string pFileName, string fileOname){
             actualNode = actualNode->left;
 
         if (actualNode->left == nullptr and actualNode->right== nullptr){
-            myfile << actualNode->letter;
+            myfile.write(&actualNode->letter, sizeof(char));
             actualNode = root;
         }
 
@@ -356,6 +367,7 @@ int main() {
         } else {
             cout << "Invalid Operation" << endl;
         }
+
         cout << "Do you want to continue? Press any number to continue; Press 0 to exit " << endl;
         cin >> cont;
     }
