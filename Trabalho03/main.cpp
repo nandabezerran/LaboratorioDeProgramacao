@@ -67,17 +67,26 @@ dict countChar(dict pDict, char pLetter){
  * @return a dict with all the letters and its ocurrencies
  */
 dict readFile(const string pFileName){
-    ifstream inputFile(pFileName);
+    ifstream inputFile(pFileName, std::ios::binary);
     dict dictFile;
     string fileLine;
+    int currByte;
+
     if (!inputFile){
         cout << "Failed to open file\n";
         return dictFile;
     }
 
-    char letter;
-    while (inputFile >> noskipws >> letter)
-        dictFile = countChar(dictFile, letter);
+    inputFile.seekg( 0, ios::end );
+    size_t fileSize = inputFile.tellg();
+    char *bytes = new char[fileSize];
+    inputFile.seekg(0, ios::beg);
+    inputFile.read(bytes, fileSize);
+    inputFile.close();
+
+    for (currByte = 0; currByte < fileSize; ++currByte) {
+        dictFile = countChar(dictFile, bytes[currByte]);
+    }
 
     return dictFile;
 }
@@ -151,16 +160,16 @@ void writeBinaryTree(heapNode *p, stringstream &out) {
  * @param pDictCode a dictChar (map<char, string>) that contains the code of each letter of the original file
  */
 void encodingFile(string pOriginalFile, stringstream &out, dictChar pDictCode){
-    ifstream inputFile(pOriginalFile);
-    char letter;
+    ifstream inputFile(pOriginalFile, std::ios::binary);
+    char currByte;
 
     if (!inputFile){
         cout << "Failed to open file\n";
         return;
     }
-    while (inputFile >> noskipws >> letter) {
+    while (inputFile >> noskipws >> currByte) {
         for (parChar element: pDictCode) {
-            if (letter == element.first) {
+            if (currByte== element.first) {
                 out << element.second;
             }
         }
