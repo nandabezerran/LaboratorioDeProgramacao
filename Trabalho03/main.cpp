@@ -2,6 +2,8 @@
 #include "Heap.h"
 #include <fstream>
 #include <sstream>
+#include <time.h>
+#include <chrono>
 
 #define NULL_CHAR (char)219 //Define a char to represent a null node
 #define SUM_NODES (char)192 //Define a char to represent the node which is a sum of two other nodes
@@ -271,7 +273,7 @@ void decompressFile(string pFileName, string fileOname){
     inputFile.read((char*)&numBits, sizeof(long int));
 
     ofstream myfile;
-    myfile.open ("Decompressed/" + fileOname);
+    myfile.open (fileOname);
     char currByte;
     heapNode* actualNode = root;
 
@@ -302,16 +304,52 @@ void decompressFile(string pFileName, string fileOname){
 }
 
 int main() {
-    string fileName;
-    cout << "Enter the name of the file: " << endl;
-    cin >> fileName;
+    int op = 0;
+    int cont = 1;
 
-    string fileAdress = "Files/"+fileName;
-    string aux = fileName;
-    string compressedFile = "Compressed/" + aux.erase(aux.length() - 3, aux.length()) + "huf";
+    while(cont != 0) {
+        cout << "If you want to compress, press 1. If you want to decompress, press 2. " << endl;
+        cin >> op;
+        if (op == 1) {
+            string fileName;
+            cout << "Enter the name of the file: " << endl;
+            cin >> fileName;
 
-    compressFile(fileAdress, compressedFile);
-    decompressFile(compressedFile, fileName);
+            string fileAdress = "Files/" + fileName;
+            string aux = fileName;
+            string compressedFile = "Compressed/" + aux.erase(aux.length() - 3, aux.length()) + "huf";
+
+            auto start = std::chrono::high_resolution_clock::now();
+            compressFile(fileAdress, compressedFile);
+            auto stop = std::chrono::high_resolution_clock::now();
+            auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+            cout << "Time taken to compress " + fileName + " : " << duration.count() << " microseconds\n" << endl;
+
+        } else if (op == 2) {
+            string fileName;
+            string decompressedFile;
+            cout << "Enter the name of the file you want to decompress: " << endl;
+            cin >> fileName;
+
+            cout << "Enter the name of the decompressed file: " << endl;
+            cin >> decompressedFile;
+
+            string fileAdress = "Compressed/" + fileName;
+            string aux = fileName;
+            string decompressedFile1 = "Decompressed/" + decompressedFile;
+
+            auto start = std::chrono::high_resolution_clock::now();
+            decompressFile(fileAdress, decompressedFile1);
+            auto stop = std::chrono::high_resolution_clock::now();
+            auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+            cout << "Time taken to decompress " + fileName + " : " << duration.count() << " microseconds\n" << endl;
+
+        } else {
+            cout << "Invalid Operation" << endl;
+        }
+        cout << "Do you want to continue? Press any number to continue; Press 0 to exit " << endl;
+        cin >> cont;
+    }
 
     return 0;
 }
