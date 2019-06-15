@@ -30,13 +30,13 @@ heapNode* newNode(char pLetter, int pQuantity){
  *        number of occurrences
  * @return heap a object from the classe Heap
  */
-Heap buildHeap(dict pDict){
-    int heapSize = pDict.size();
+Heap buildHeap(dict *pDict){
+    int heapSize = pDict->size();
     auto aux = (heapNode**)malloc(sizeof(heapNode *) * heapSize);
     Heap heap = Heap(heapSize);
     int i = 0;
 
-    for (par element: pDict) {
+    for (par element: (*pDict)) {
         aux[i] = newNode(element.first, element.second);
         i++;
     }
@@ -50,43 +50,35 @@ Heap buildHeap(dict pDict){
 
 /* Its a function that count the ocurrences of each letter in the text and
  * store in a dict
- * @param pDict map<char, int> that has all the letters and the number of 
+ * @param pDict map<char, int> that has all the letters and the number of
  *        ocurrences of each one.
  * @param pLetter the letter we want to add in the dictionary.
  * @return a dict updated with the pLetter
  */
-dict countChar(dict pDict, char pLetter){
+void countChar(dict &pDict, char &pLetter){
     if (pDict[pLetter])
         pDict[pLetter] += 1;
     else
         pDict[pLetter] = 1;
-    return pDict;
 }
 
-/* It read the file and calls the functions to count every ocurrence of 
+/* It read the file and calls the functions to count every ocurrence of
  * every letter in the file
  * @param pFileName the name of the file we want to read
  * @return a dict with all the letters and its ocurrencies
  */
-dict readFile(const string pFileName){
+dict *readFile(const string pFileName){
     ifstream inputFile(pFileName, std::ios::binary);
-    dict dictFile;
-    int currByte;
+    dict *dictFile = new dict();
 
     if (!inputFile){
         cout << "Failed to open file\n";
-        return dictFile;
+        return nullptr;
     }
 
-    inputFile.seekg( 0, ios::end );
-    size_t fileSize = inputFile.tellg();
-    char *bytes = new char[fileSize];
-    inputFile.seekg(0, ios::beg);
-    inputFile.read(bytes, fileSize);
-    inputFile.close();
-
-    for (currByte = 0; currByte < fileSize; ++currByte) {
-        dictFile = countChar(dictFile, bytes[currByte]);
+    char currReadByte;
+    while (inputFile >> noskipws >> currReadByte) {
+        countChar((*dictFile), currReadByte);
     }
 
     return dictFile;
@@ -99,7 +91,10 @@ dict readFile(const string pFileName){
  * @return a heapNode* to the root of the tree
  */
 heapNode* buildHuffmanTree(string pFileName){
-    dict elements = readFile(pFileName);
+    cout << "  counting the elements..." << endl;
+    dict *elements = readFile(pFileName);
+
+    cout << "  generating the tree..." << endl;
     Heap heap = buildHeap(elements);
     heapNode *left;
     heapNode *right;
@@ -114,11 +109,13 @@ heapNode* buildHuffmanTree(string pFileName){
 
     }
 
+    cout << "  minimizing the tree..." << endl;
+
     return heap.extractMinimum();
 
 }
 
-/* It go through the tree until we reach a leaf node. For every right 
+/* It go through the tree until we reach a leaf node. For every right
  * direction we add a 1 and for every left a 0
  * @param pElement the node of the huffman tree
  * @param pCode the string we are going to create with the code of each
@@ -166,21 +163,65 @@ void writeBinaryTree(heapNode *p, vector<char> &out) {
  * @param &out a stringstream that will have the text of our original file codified
  * @param pDictCode a dictChar (map<char, string>) that contains the code of each letter of the original file
  */
-void encodingFile(string pOriginalFile, stringstream &out, dictChar pDictCode){
+void encodingFile(string pOriginalFile, ofstream &out, dictChar pDictCode){
     ifstream inputFile(pOriginalFile, std::ios::binary);
-    char currByte;
+    char currReadByte;
 
     if (!inputFile){
         cout << "Failed to open file\n";
         return;
     }
-    while (inputFile >> noskipws >> currByte) {
-        for (parChar element: pDictCode) {
-            if (currByte== element.first) {
-                out << element.second;
+
+    char extraBits = 0;
+
+    // Records the position where we record the amount of extra bits at the end of the file
+    streamoff extraBitsAddress = out.tellp();
+
+    // Leaves an empty byte to record the amount of extra bits at the end of the file
+    out.write(&extraBits, sizeof(char));
+
+    int bytesPos = 0;
+    int currBitPos = 0;
+    char currWritingByte = 0; // It starts 0000 0000
+
+    while (inputFile >> noskipws >> currReadByte) {
+        string &bits = pDictCode[currReadByte];
+        int recordedBits = 0;
+        // If the size of the file content isn't divisible by 8 we fill with 0's to be divisible
+
+        while(recordedBits < bits.size()) {
+            currWritingByte = currWritingByte << 1;
+            if(bits[recordedBits] == '1') {
+                currWritingByte = currWritingByte | (char) 1;
+            }
+            recordedBits++;
+            currBitPos++;
+            if(currBitPos == BYTE) {
+                out.write(&currWritingByte, sizeof(char));
+                currWritingByte = 0;
+                currBitPos = 0;
+                bytesPos++;
             }
         }
     }
+    if(currBitPos != 0) {
+
+        // Adjust the last byte to have the extra bits
+        extraBits = (char)(BYTE - currBitPos);
+        currWritingByte = currWritingByte << extraBits;
+
+        cout << "Extra bits on the compressed file = " << (int)extraBits << endl;
+
+        // Write the last byte;
+        out.write(&currWritingByte, sizeof(char));
+
+        // Write the correct amount of extra bits in the file
+        out.seekp(extraBitsAddress);
+        out.write(&extraBits, sizeof(char));
+    }
+
+
+    inputFile.close();
 }
 
 /* It generates the compressed file
@@ -188,9 +229,11 @@ void encodingFile(string pOriginalFile, stringstream &out, dictChar pDictCode){
  * @param pExitFile the name of the file that will store de compressed file
  */
 void compressFile(string pFileName, string pExitFile){
+    cout << "creating minimum huffman..." << endl;
     heapNode* minimunHuffman = buildHuffmanTree(pFileName);
     string code;
     dictChar dictCode;
+    cout << "generating dictionary of codes..." << endl;
     dictCode = generateCodes(minimunHuffman, code, dictCode);
 
     ofstream myfile;
@@ -198,52 +241,27 @@ void compressFile(string pFileName, string pExitFile){
     myfile.open(pExitFile, std::ios::binary);
 
 
+    cout << "writing the binary tree in the file..." << endl;
     writeBinaryTree(minimunHuffman, buffer);
     // The size of the string containing our tree structure, to know exactly how much we need to read
     // from the file to get all the string, and then we save in the beginning of the file;
     int size = buffer.size();
-    myfile.write((char *)&size, sizeof(int)); 
+    myfile.write((char *)&size, sizeof(int));
     // When we save the size of the tree its time to save the whole tree string in the file
     myfile.write(buffer.data(), size);
 
-
-    stringstream encondingAux;
-    encodingFile(pFileName, encondingAux, dictCode);
-    string encodedString = encondingAux.str(); // Transforming the stringstream in a cstring
-
-    int bytesPos = 0;
-    auto numBits = (long int)encodedString.length(); // Getting the size of the file content
-    myfile.write((char *)&numBits, sizeof(long int));
-
-    // If the size of the file content isn't divisible by 8 we fill with 0's to be divisible
-    int extraZeros =  BYTE - (numBits % BYTE); 
-    for (int j = 0; j < extraZeros; ++j) {
-        encodedString += '0';
-    }
-
-    // We go through each byte of the file
-    while(bytesPos + BYTE <= numBits + extraZeros) {
-        char c = 0; // It starts 0000 0000
-        for (int i = bytesPos; i < bytesPos + BYTE; ++i) {
-            c = c << 1; // To add the letter in the first element of the right side
-            if (encodedString[i] == '1') {
-                c = c | (char) 1; 
-            }
-        }
-        bytesPos+= BYTE;
-        myfile.write(&c, sizeof(char));
-    }
+    cout << "writing the encoded data in the file..." << endl;
+    encodingFile(pFileName, myfile, dictCode);
 
     myfile.close();
-
 }
 
 /* It reads the tree from the compressed file and turn it into a tree structure
  * @param *&p a heapNode to generate its children by itself
  * @param &pFile a ifstream to go through the file
  * @param &pTreeStringSize the size of the tree string
- * @param &pPos position that we are in the tree string 
- */ 
+ * @param &pPos position that we are in the tree string
+ */
 void readBinaryTree(heapNode *&p, ifstream &pFile, int &pTreeStringSize, int &pPos) {
     if (pPos >= pTreeStringSize){
         return;
@@ -289,38 +307,49 @@ void decompressFile(string pFileName, string fileOname){
     readBinaryTree(root, inputFile, treeStringSize, pos);
 
     // Reading the size of the content of the file
-    long int numBits = 0;
-    inputFile.read((char*)&numBits, sizeof(long int));
+    char extraBits = 0;
+    inputFile.read(&extraBits, sizeof(char));
 
-    ofstream myfile;
-    myfile.open(fileOname, std::ios::binary);
+    cout << "Amount of extra bits read from the file = " << (int) extraBits << endl;
+
+    ofstream myFile;
+    myFile.open(fileOname, std::ios::binary);
     char currByte;
     heapNode* actualNode = root;
 
-    for (long int i = 0; i < numBits ; ++i) {
-        long int currBitPos = i % BYTE;
-        if(currBitPos == 0) {
+    char currBitPos = 0;
+    inputFile.read(&currByte, sizeof(char));
+
+    while(!inputFile.eof() || currBitPos != BYTE) {
+        if(currBitPos == (char)BYTE) {
+            currBitPos = 0;
             inputFile.read(&currByte, sizeof(char));
         }
 
         // (currByte >> ((BYTE - 1) - currBitPos) puts the actual bit we want to read in the first
-        // position of the right side, then it can be 0 or 1, it compares with 1 to check if it is
-        // 0 or 1
+        // position of the right side, then it uses binary AND to mask only this bit and whatever is
+        // left is always gonna be 1 or 0
         if((currByte >> ((BYTE - 1) - currBitPos)) & (char)1){
             actualNode = actualNode->right;
         }
-        
-        else
+        else {
             actualNode = actualNode->left;
+        }
 
         if (actualNode->left == nullptr and actualNode->right== nullptr){
-            myfile.write(&actualNode->letter, sizeof(char));
+            myFile.write(&actualNode->letter, sizeof(char));
             actualNode = root;
         }
 
+        currBitPos++;
+
+        // Ignore the extra bits at the end of the file
+        if(inputFile.eof() && currBitPos > (BYTE - extraBits)) {
+            break;
+        }
     }
     inputFile.close();
-    myfile.close();
+    myFile.close();
 }
 
 int main() {
