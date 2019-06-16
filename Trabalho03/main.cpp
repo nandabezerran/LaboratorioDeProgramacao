@@ -109,7 +109,6 @@ heapNode* buildHuffmanTree(string pFileName){
 
     }
 
-    cout << "  minimizing the tree..." << endl;
 
     return heap.extractMinimum();
 
@@ -187,7 +186,6 @@ void encodingFile(string pOriginalFile, ofstream &out, dictChar pDictCode){
     while (inputFile >> noskipws >> currReadByte) {
         string &bits = pDictCode[currReadByte];
         int recordedBits = 0;
-        // If the size of the file content isn't divisible by 8 we fill with 0's to be divisible
 
         while(recordedBits < bits.size()) {
             currWritingByte = currWritingByte << 1;
@@ -229,7 +227,7 @@ void encodingFile(string pOriginalFile, ofstream &out, dictChar pDictCode){
  * @param pExitFile the name of the file that will store de compressed file
  */
 void compressFile(string pFileName, string pExitFile){
-    cout << "creating minimum huffman..." << endl;
+    cout << "creating huffman tree..." << endl;
     heapNode* minimunHuffman = buildHuffmanTree(pFileName);
     string code;
     dictChar dictCode;
@@ -320,6 +318,8 @@ void decompressFile(string pFileName, string fileOname){
     char currBitPos = 0;
     inputFile.read(&currByte, sizeof(char));
 
+    // When is end of file and the currBitPos is different of BYTE we do not read all the byte, we read only
+    // BYTE - extraBits.
     while(!inputFile.eof() || currBitPos != BYTE) {
         if(currBitPos == (char)BYTE) {
             currBitPos = 0;
@@ -336,7 +336,7 @@ void decompressFile(string pFileName, string fileOname){
             actualNode = actualNode->left;
         }
 
-        if (actualNode->left == nullptr and actualNode->right== nullptr){
+        if (actualNode->left == nullptr and actualNode->right == nullptr){
             myFile.write(&actualNode->letter, sizeof(char));
             actualNode = root;
         }
@@ -354,52 +354,47 @@ void decompressFile(string pFileName, string fileOname){
 
 int main() {
     int op = 0;
-    int cont = 1;
+    cout << "If you want to compress, press 1. If you want to decompress, press 2. " << endl;
+    cin >> op;
+    if (op == 1) {
+        string fileName;
+        cout << "Enter the name of the file: " << endl;
+        cin >> fileName;
 
-    while(cont != 0) {
-        cout << "If you want to compress, press 1. If you want to decompress, press 2. " << endl;
-        cin >> op;
-        if (op == 1) {
-            string fileName;
-            cout << "Enter the name of the file: " << endl;
-            cin >> fileName;
+        string fileAdress = "Files/" + fileName;
+        string aux = fileName;
+        string compressedFile = "Compressed/" + aux.erase(aux.length() - 3, aux.length()) + "huf";
 
-            string fileAdress = "Files/" + fileName;
-            string aux = fileName;
-            string compressedFile = "Compressed/" + aux.erase(aux.length() - 3, aux.length()) + "huf";
+        auto start = std::chrono::high_resolution_clock::now();
+        compressFile(fileAdress, compressedFile);
+        auto stop = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+        cout << "Time taken to compress " + fileName + " : " << duration.count() << " microseconds\n" << endl;
 
-            auto start = std::chrono::high_resolution_clock::now();
-            compressFile(fileAdress, compressedFile);
-            auto stop = std::chrono::high_resolution_clock::now();
-            auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-            cout << "Time taken to compress " + fileName + " : " << duration.count() << " microseconds\n" << endl;
+    } else if (op == 2) {
+        string fileName;
+        string decompressedFile;
+        cout << "Enter the name of the file you want to decompress: " << endl;
+        cin >> fileName;
 
-        } else if (op == 2) {
-            string fileName;
-            string decompressedFile;
-            cout << "Enter the name of the file you want to decompress: " << endl;
-            cin >> fileName;
+        cout << "Enter the name of the decompressed file: " << endl;
+        cin >> decompressedFile;
 
-            cout << "Enter the name of the decompressed file: " << endl;
-            cin >> decompressedFile;
+        string fileAdress = "Compressed/" + fileName;
+        string aux = fileName;
+        string decompressedFile1 = "Decompressed/" + decompressedFile;
 
-            string fileAdress = "Compressed/" + fileName;
-            string aux = fileName;
-            string decompressedFile1 = "Decompressed/" + decompressedFile;
+        auto start = std::chrono::high_resolution_clock::now();
+        decompressFile(fileAdress, decompressedFile1);
+        auto stop = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+        cout << "Time taken to decompress " + fileName + " : " << duration.count() << " microseconds\n" << endl;
 
-            auto start = std::chrono::high_resolution_clock::now();
-            decompressFile(fileAdress, decompressedFile1);
-            auto stop = std::chrono::high_resolution_clock::now();
-            auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-            cout << "Time taken to decompress " + fileName + " : " << duration.count() << " microseconds\n" << endl;
-
-        } else {
-            cout << "Invalid Operation" << endl;
-        }
-
-        cout << "Do you want to continue? Press any number to continue; Press 0 to exit " << endl;
-        cin >> cont;
     }
+    else {
+        cout << "Invalid Operation" << endl;
+    }
+
 
     return 0;
 }
