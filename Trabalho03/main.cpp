@@ -77,7 +77,11 @@ dict *readFile(const string pFileName){
     }
 
     char currReadByte;
+
     while (inputFile >> noskipws >> currReadByte) {
+        if(inputFile.eof()){
+            break;
+        }
         countChar((*dictFile), currReadByte);
     }
 
@@ -185,6 +189,7 @@ void encodingFile(string pOriginalFile, ofstream &out, dictChar pDictCode){
 
     while (inputFile >> noskipws >> currReadByte) {
         string &bits = pDictCode[currReadByte];
+
         int recordedBits = 0;
 
         while(recordedBits < bits.size()) {
@@ -211,7 +216,7 @@ void encodingFile(string pOriginalFile, ofstream &out, dictChar pDictCode){
         cout << "Extra bits on the compressed file = " << (int)extraBits << endl;
 
         // Write the last byte;
-        out.write(&currWritingByte, sizeof(char));
+        //out.write(&currWritingByte, sizeof(char));
 
         // Write the correct amount of extra bits in the file
         out.seekp(extraBitsAddress);
@@ -318,6 +323,7 @@ void decompressFile(string pFileName, string fileOname){
     char currBitPos = 0;
     inputFile.read(&currByte, sizeof(char));
 
+
     // When is end of file and the currBitPos is different of BYTE we do not read all the byte, we read only
     // BYTE - extraBits.
     while(!inputFile.eof() || currBitPos != BYTE) {
@@ -337,16 +343,18 @@ void decompressFile(string pFileName, string fileOname){
         }
 
         if (actualNode->left == nullptr and actualNode->right == nullptr){
-            myFile.write(&actualNode->letter, sizeof(char));
+            // Ignore the extra bits at the end of the file
+            if(inputFile.eof() && currBitPos >= (BYTE - extraBits)) {
+                cout << "reached EOF" << endl;
+                break;
+            }
+            else {
+                myFile.write(&actualNode->letter, sizeof(char));
+            }
             actualNode = root;
         }
 
         currBitPos++;
-
-        // Ignore the extra bits at the end of the file
-        if(inputFile.eof() && currBitPos > (BYTE - extraBits)) {
-            break;
-        }
     }
     inputFile.close();
     myFile.close();
