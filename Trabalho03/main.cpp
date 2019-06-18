@@ -99,11 +99,15 @@ heapNode* buildHuffmanTree(string pFileName){
     dict *elements = readFile(pFileName);
 
     cout << "  generating the tree..." << endl;
+
     Heap heap = buildHeap(elements);
     heapNode *left;
     heapNode *right;
     heapNode *sumOfNodes;
-    while (heap.heapSize != 1){
+    while (heap.heapSize != 0){
+        if(heap.heapSize == 1){
+            break;
+        }
         left = heap.extractMinimum();
         right = heap.extractMinimum();
         sumOfNodes = newNode(SUM_NODES, left->quantity+right->quantity);
@@ -113,7 +117,10 @@ heapNode* buildHuffmanTree(string pFileName){
 
     }
 
-
+    if(heap.heapSize == 0){
+        heapNode* null = newNode(NULL,NULL);
+        return null;
+    }
     return heap.extractMinimum();
 
 }
@@ -127,6 +134,9 @@ heapNode* buildHuffmanTree(string pFileName){
  * @return a dictCHar filled with the letters and its codes
  */
 dictChar generateCodes(heapNode* pElement , string pCode, dictChar pCodes){
+    if(pElement == nullptr){
+        return pCodes;
+    }
     if (!pElement->left && !pElement->right) {
         pCodes[pElement->letter] = pCode;
     }
@@ -327,6 +337,9 @@ void decompressFile(string pFileName, string fileOname){
     // When is end of file and the currBitPos is different of BYTE we do not read all the byte, we read only
     // BYTE - extraBits.
     while(!inputFile.eof() || currBitPos != BYTE) {
+        if(inputFile.eof() && currBitPos == 0){
+            break;
+        }
         if(currBitPos == (char)BYTE) {
             currBitPos = 0;
             inputFile.read(&currByte, sizeof(char));
