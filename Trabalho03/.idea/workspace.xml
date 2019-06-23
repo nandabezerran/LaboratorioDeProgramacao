@@ -12,7 +12,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="51f8d9e6-4715-454f-8b56-a6eb1383939c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Compressed/Stavechurch-heddal.huf" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Compressed/Stavechurch-heddal.huf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Compressed/Test.huf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Compressed/empty_file.huf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Decompressed/Stavechurch-heddal.bmp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Decompressed/Stavechurch-heddal.bmp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Decompressed/Test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Decompressed/ch05-patterns.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Decompressed/ch05-patterns.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Decompressed/ch5-patterns.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Decompressed/empty_file.txt" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -38,16 +46,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-628">
-              <caret line="340" column="18" selection-start-line="340" selection-start-column="18" selection-end-line="340" selection-end-column="18" />
+            <state relative-caret-position="313">
+              <caret line="122" column="5" selection-start-line="122" selection-start-column="5" selection-end-line="122" selection-end-column="5" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -56,32 +59,20 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmake-build-debug/Compressed/empty_file.huf">
+        <entry file="file://$PROJECT_DIR$/cmake-build-debug/Files/one_byte.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret column="6" lean-forward="true" selection-start-column="6" selection-end-column="6" />
+              <caret column="1" selection-start-column="1" selection-end-column="1" />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmake-build-debug/Decompressed/empty_file.txt">
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cmake-build-debug/Files/books.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="310">
-              <caret line="128456" column="27" lean-forward="true" selection-start-line="128456" selection-start-column="27" selection-end-line="128456" selection-end-column="27" />
+            <state relative-caret-position="2183752">
+              <caret line="128456" column="27" selection-start-line="128456" selection-start-column="27" selection-end-line="128456" selection-end-column="27" />
             </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmake-build-debug/Decompressed/books.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2183439" />
           </provider>
         </entry>
       </file>
@@ -97,7 +88,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Heap.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-47">
+            <state relative-caret-position="1292">
               <caret line="76" column="8" selection-start-line="76" selection-start-column="8" selection-end-line="76" selection-end-column="33" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
@@ -142,6 +133,7 @@
         <option value="$PROJECT_DIR$/cmake-build-debug/Test.txt" />
         <option value="$PROJECT_DIR$/cmake-build-debug/Files/Test.txt" />
         <option value="$PROJECT_DIR$/main.cpp" />
+        <option value="$PROJECT_DIR$/cmake-build-debug/Files/one_byte.txt" />
       </list>
     </option>
   </component>
@@ -245,30 +237,32 @@
       <workItem from="1560512265527" duration="9789000" />
       <workItem from="1560603195964" duration="2661000" />
       <workItem from="1560711727083" duration="2322000" />
-      <workItem from="1560857128094" duration="4559000" />
+      <workItem from="1560857128094" duration="6494000" />
+      <workItem from="1561240258098" duration="292000" />
+      <workItem from="1561251736864" duration="87000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="105224000" />
+    <option name="totallyTimeSpent" value="107538000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22390318" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22995462" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.43797275" visible="true" weight="0.34860885" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.42738277" visible="true" weight="0.3535188" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49546143" weight="0.35515547" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" />
-      <window_info anchor="bottom" id="Messages" order="8" sideWeight="0.7299546" weight="0.3715221" />
+      <window_info anchor="bottom" id="Messages" order="8" sideWeight="0.7193646" weight="0.3715221" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49924356" weight="0.3289689" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5620272" side_tool="true" visible="true" weight="0.34860885" />
+      <window_info active="true" anchor="bottom" id="Event Log" order="10" sideWeight="0.57261723" side_tool="true" visible="true" weight="0.3535188" />
       <window_info anchor="bottom" id="Version Control" order="11" sideWeight="0.49924356" weight="0.3289689" />
       <window_info anchor="bottom" id="CMake" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -432,53 +426,17 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/Decompressed/Stavechurch-heddal.bmp" />
-    <entry file="file://$PROJECT_DIR$/cmake-build-debug/Compressed/Test.huf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="10" column="19" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/Compressed/Test.huf" />
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/Files/Test2.txt" />
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-build-debug/Files/Test.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Heap.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
-          <folding>
-            <element signature="e#53#71#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/Decompressed/books.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2183439" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-build-debug/Decompressed/Test.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="97" selection-start-line="3" selection-start-column="97" selection-end-line="3" selection-end-column="97" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-build-debug/Files/books.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="128456" column="27" lean-forward="true" selection-start-line="128456" selection-start-column="27" selection-end-line="128456" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/Decompressed/Test.txt" />
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/Compressed/Stavechurch-heddal.huf">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -489,9 +447,43 @@
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/Files/empty_file.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/Decompressed/empty_file.txt" />
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/Compressed/empty_file.huf" />
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/Decompressed/one_byte.txt" />
+    <entry file="file://$PROJECT_DIR$/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="313">
+          <caret line="122" column="5" selection-start-line="122" selection-start-column="5" selection-end-line="122" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/Files/one_byte.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="1" selection-start-column="1" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/Files/books.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2183752">
+          <caret line="128456" column="27" selection-start-line="128456" selection-start-column="27" selection-end-line="128456" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/Files/Test.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Heap.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-47">
+        <state relative-caret-position="1292">
           <caret line="76" column="8" selection-start-line="76" selection-start-column="8" selection-end-line="76" selection-end-column="33" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
@@ -499,22 +491,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-build-debug/Decompressed/empty_file.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-build-debug/Compressed/empty_file.huf">
+    <entry file="file://$PROJECT_DIR$/Heap.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="6" lean-forward="true" selection-start-column="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-628">
-          <caret line="340" column="18" selection-start-line="340" selection-start-column="18" selection-end-line="340" selection-end-column="18" />
+        <state relative-caret-position="187">
+          <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#53#71#0" expanded="true" />
           </folding>
         </state>
       </provider>
