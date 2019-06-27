@@ -116,7 +116,19 @@ Noh* rotacaoEsquerda(Noh *x){
 
     return y;
 }
-
+void ajustarAlturaArvore(Noh* paiAtual){
+    if(!paiAtual){
+        return;
+    }
+    int hEsq;
+    int hDir;
+    hEsq = paiAtual->esq != nullptr ? paiAtual->esq->h : 0;
+    hDir = paiAtual->dir != nullptr ? paiAtual->dir->h : 0;
+    if((hEsq + 1) != paiAtual->h && (hDir + 1) != paiAtual->h) {
+        paiAtual->h = max(hEsq + 1, hDir + 1);
+    }
+    ajustarAlturaArvore(paiAtual->pai);
+}
 Noh* inserir (DicAVL &D, TC c, TV v){
     Noh* nohAtual = D.raiz;
     Noh* paiAtual = nullptr;
@@ -139,7 +151,6 @@ Noh* inserir (DicAVL &D, TC c, TV v){
     while(nohAtual != nullptr) {
         paiAtual = nohAtual;
         praEsq = nohAtual->chave > c;
-        nohAtual->h++;
         if(praEsq) {
             nohAtual = nohAtual->esq;
         } else {
@@ -159,8 +170,10 @@ Noh* inserir (DicAVL &D, TC c, TV v){
     // Insert in the tree;
     if(praEsq) {
         paiAtual->esq = novoNoh;
+        ajustarAlturaArvore(paiAtual);
     } else {
         paiAtual->dir = novoNoh;
+        ajustarAlturaArvore(paiAtual);
     }
 
     int hEsq;
@@ -216,20 +229,6 @@ Noh* acharSucessor(Noh* n){
     while (nohAtual->esq != nullptr)
         nohAtual = nohAtual->esq;
     return nohAtual;
-}
-
-void ajustarAlturaArvore(Noh* paiAtual){
-    if(!paiAtual){
-        return;
-    }
-    int hEsq;
-    int hDir;
-    hEsq = paiAtual->esq != nullptr ? paiAtual->esq->h : 0;
-    hDir = paiAtual->dir != nullptr ? paiAtual->dir->h : 0;
-    if((hEsq + 1) != paiAtual->h && (hDir + 1) != paiAtual->h) {
-        paiAtual->h = max(hEsq + 1, hDir + 1);
-    }
-    ajustarAlturaArvore(paiAtual->pai);
 }
 
 void remover (DicAVL &D, Noh *n){
