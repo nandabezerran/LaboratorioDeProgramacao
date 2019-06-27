@@ -7,7 +7,7 @@
 int tamValor = 2;
 int distancia = 2;
 
-TV pegarValorPraImpressao(DicAVL &D, int profundidade, int indice) {
+TC pegarValorPraImpressao(DicAVL &D, int profundidade, int indice) {
     Noh* nohAtual = D.raiz;
 
     for(int i = profundidade - 1; i >= 0; i--) {
@@ -20,7 +20,7 @@ TV pegarValorPraImpressao(DicAVL &D, int profundidade, int indice) {
             return 0;
         }
     }
-    return nohAtual->valor;
+    return nohAtual->chave;
 
 }
 
@@ -40,7 +40,7 @@ void imprimirArvore(DicAVL &D) {
             if(j != 0) {
                 cout << std::string(espacoEntre, ' ');
             }
-            TV valor = pegarValorPraImpressao(D, i, j);
+            TC valor = pegarValorPraImpressao(D, i, j);
             if(valor == 0) {
                 cout << "[" << std::string(tamValor, ' ') << "]";
             } else {

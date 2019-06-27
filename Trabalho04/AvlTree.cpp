@@ -13,10 +13,10 @@ Noh* procurar(DicAVL &D, TC c) {
         return nullptr;
 
     while(nohAtual->chave != c){
-        if(nohAtual->valor > c) {
+        if(nohAtual->chave > c) {
             nohAtual = nohAtual->esq;
         }
-        else if(nohAtual->valor < c){
+        else if(nohAtual->chave < c){
             nohAtual = nohAtual->dir;
         }
 
@@ -138,7 +138,7 @@ Noh* inserir (DicAVL &D, TC c, TV v){
     bool praEsq;
     while(nohAtual != nullptr) {
         paiAtual = nohAtual;
-        praEsq = nohAtual->valor > v;
+        praEsq = nohAtual->chave > c;
         nohAtual->h++;
         if(praEsq) {
             nohAtual = nohAtual->esq;
@@ -165,17 +165,16 @@ Noh* inserir (DicAVL &D, TC c, TV v){
 
     int hEsq;
     int hDir;
-    // Run back the tree and find unbalance;
+    // Percorrendo a árvore de baixo pra cima pra achar o desbalanceamento;
     do {
         hEsq = paiAtual->esq != nullptr ? paiAtual->esq->h : 0;
         hDir = paiAtual->dir != nullptr ? paiAtual->dir->h : 0;
 
-        if((hEsq + 1) != paiAtual->h && (hDir + 1) != paiAtual->h) {
-            paiAtual->h = max(hEsq + 1, hDir + 1);
-        }
+        paiAtual->h = 1 + max(hEsq, hDir);
 
+        //Esquerda maior que a direita
         if(hEsq - hDir > 1) {
-            // Left pre left rot
+            // Esq pre esq rot
             if(paiAtual->esq != nullptr) {
                 hEsq = paiAtual->esq->esq != nullptr ? paiAtual->esq->esq->h : 0;
                 hDir = paiAtual->esq->dir != nullptr ? paiAtual->esq->dir->h : 0;
@@ -183,13 +182,15 @@ Noh* inserir (DicAVL &D, TC c, TV v){
                     rotacaoEsquerda(paiAtual->esq);
                 }
             }
-            // Right Rotation;
+            // Rotacao direita;
             paiAtual = rotacaoDireita(paiAtual);
             if(paiAtual->pai == nullptr) {
                 D.raiz = paiAtual;
             }
-        } else if (hEsq - hDir < -1) {
-            // Right Pre left rot
+        }
+        //Direita maior que a esquerda
+        else if (hEsq - hDir < -1) {
+            // Direita Pre esquerda rot
             if(paiAtual->dir != nullptr) {
                 hEsq = paiAtual->dir->esq != nullptr ? paiAtual->dir->esq->h : 0;
                 hDir = paiAtual->dir->dir != nullptr ? paiAtual->dir->dir->h : 0;
@@ -197,7 +198,7 @@ Noh* inserir (DicAVL &D, TC c, TV v){
                     rotacaoDireita(paiAtual->dir);
                 }
             }
-            // Left Rotation;
+            // Rotacao esquerda;
             paiAtual = rotacaoEsquerda(paiAtual);
             if(paiAtual->pai == nullptr) {
                 D.raiz = paiAtual;
@@ -240,64 +241,68 @@ void remover (DicAVL &D, Noh *n){
         return;
     }
 
-    while(nohAtual->valor != n->valor){
-        if(nohAtual->valor > n->valor) {
-            nohAtual = nohAtual->esq;
-        }
-        else if(nohAtual->valor < n->valor){
-            nohAtual = nohAtual->dir;
-        }
-
-        if(nohAtual == nullptr){
-            cout << "Noh nao encontrado" << endl;
-            return;
-        }
+    nohAtual = procurar(D, n->chave);
+    if(!nohAtual){
+        cout << "Noh nao encontrado" << endl;
+        return;
     }
 
     paiAtual = nohAtual->pai;
     bool esquerda = true;
-    if(paiAtual->dir == nohAtual){
+    bool raiz = false;
+    if(!nohAtual->pai){
+        raiz = true;
+        esquerda = false;
+    }
+    else if(paiAtual->dir == nohAtual){
         esquerda = false;
     }
     if(nohAtual->dir == nullptr && nohAtual->esq == nullptr){
         free(nohAtual);
-        if(esquerda){
-            paiAtual->esq = nullptr;
+        if(raiz){
+            D.raiz = nullptr;
         }
         else{
-            paiAtual->dir = nullptr;
+            if(esquerda){
+                paiAtual->esq = nullptr;
+            }
+            else{
+                paiAtual->dir = nullptr;
+            }
+            ajustarAlturaArvore(paiAtual);
         }
-        ajustarAlturaArvore(paiAtual);
     }
 
     else if(nohAtual->dir == nullptr){
-        if(esquerda){
-            paiAtual->esq = nohAtual->esq;
+        if(!raiz){
+            if(esquerda){
+                paiAtual->esq = nohAtual->esq;
+            }
+            else{
+                paiAtual->dir = nohAtual->esq;
+            }
             nohAtual->esq->pai = paiAtual;
-            cout << paiAtual->h << endl;
             ajustarAlturaArvore(paiAtual);
-            cout << paiAtual->h << endl;
             free(nohAtual);
         }
         else{
-            paiAtual->dir = nohAtual->esq;
             nohAtual->esq->pai = paiAtual;
-            cout << paiAtual->h << endl;
-            ajustarAlturaArvore(paiAtual);
-            cout << paiAtual->h << endl;
             free(nohAtual);
         }
     }
     else if(nohAtual->esq == nullptr) {
-        if (esquerda) {
-            paiAtual->esq = nohAtual->dir;
+        if(!raiz) {
+            if (esquerda) {
+                paiAtual->esq = nohAtual->dir;
+            } else {
+                paiAtual->dir = nohAtual->dir;
+            }
             nohAtual->dir->pai = paiAtual;
             ajustarAlturaArvore(paiAtual);
             free(nohAtual);
-        } else {
-            paiAtual->dir = nohAtual->dir;
+        }
+        else{
             nohAtual->dir->pai = paiAtual;
-            ajustarAlturaArvore(paiAtual);
             free(nohAtual);
         }
     }
@@ -307,12 +312,7 @@ void remover (DicAVL &D, Noh *n){
         Noh *auxDir;
         int auxH;
         Noh *auxPai;
-        if(esquerda){
-            paiAtual->esq = sucessor;
-        }
-        else{
-            paiAtual->dir = sucessor;
-        }
+
         auxPai = sucessor->pai;
         auxEsq = nohAtual->esq;
         auxDir = nohAtual->dir;
@@ -325,25 +325,42 @@ void remover (DicAVL &D, Noh *n){
         sucessor->esq = auxEsq;
         sucessor->pai = paiAtual;
         sucessor->h = auxH;
-
-        free(nohAtual);
-        auxPai->esq = nullptr;
-        ajustarAlturaArvore(auxPai);
+        if(!raiz) {
+            if (esquerda) {
+                paiAtual->esq = sucessor;
+            } else {
+                paiAtual->dir = sucessor;
+            }
+            free(nohAtual);
+            auxPai->esq = nullptr;
+            ajustarAlturaArvore(auxPai);
+        }
+        else {
+            D.raiz = sucessor;
+            free(nohAtual);
+            auxPai->esq = nullptr;
+        }
     }
 
     int hEsq;
     int hDir;
-    // Run back the tree and find unbalance;
+    // Percorrendo a árvore de baixo pra cima pra achar o desbalanceamento;
     do {
-        hEsq = paiAtual->esq != nullptr ? paiAtual->esq->h : 0;
-        hDir = paiAtual->dir != nullptr ? paiAtual->dir->h : 0;
-
+        if(raiz){
+            paiAtual = D.raiz;
+            hEsq = paiAtual->esq != nullptr ? paiAtual->esq->h : 0;
+            hDir = paiAtual->dir != nullptr ? paiAtual->dir->h : 0;
+        }
+        else {
+            hEsq = paiAtual->esq != nullptr ? paiAtual->esq->h : 0;
+            hDir = paiAtual->dir != nullptr ? paiAtual->dir->h : 0;
+        }
         if((hEsq + 1) != paiAtual->h && (hDir + 1) != paiAtual->h) {
             paiAtual->h = max(hEsq + 1, hDir + 1);
         }
 
         if(hEsq - hDir > 1) {
-            // Left pre left rot
+            // Esquerda pre Esquerda rot
             if(paiAtual->esq != nullptr) {
                 hEsq = paiAtual->esq->esq != nullptr ? paiAtual->esq->esq->h : 0;
                 hDir = paiAtual->esq->dir != nullptr ? paiAtual->esq->dir->h : 0;
@@ -351,13 +368,13 @@ void remover (DicAVL &D, Noh *n){
                     rotacaoEsquerda(paiAtual->esq);
                 }
             }
-            // Right Rotation;
+            // Rotacao direita;
             paiAtual = rotacaoDireita(paiAtual);
             if(paiAtual->pai == nullptr) {
                 D.raiz = paiAtual;
             }
         } else if (hEsq - hDir < -1) {
-            // Right Pre left rot
+            // Direita Pre esquerda rot
             if(paiAtual->dir != nullptr) {
                 hEsq = paiAtual->dir->esq != nullptr ? paiAtual->dir->esq->h : 0;
                 hDir = paiAtual->dir->dir != nullptr ? paiAtual->dir->dir->h : 0;
@@ -365,7 +382,7 @@ void remover (DicAVL &D, Noh *n){
                     rotacaoDireita(paiAtual->dir);
                 }
             }
-            // Left Rotation;
+            // Rotacao esquerda;
             paiAtual = rotacaoEsquerda(paiAtual);
             if(paiAtual->pai == nullptr) {
                 D.raiz = paiAtual;
