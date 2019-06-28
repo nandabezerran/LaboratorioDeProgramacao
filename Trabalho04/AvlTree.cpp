@@ -34,7 +34,7 @@ void inicializar (DicAVL &D){
 
 void terminarRecursivo(Noh *n){
     if(n->esq == nullptr && n->dir == nullptr){
-        delete n;
+        free(n);
     }
     else{
         if(n->esq != nullptr)
@@ -46,7 +46,8 @@ void terminarRecursivo(Noh *n){
 
 void terminar (DicAVL &D){
     if(D.raiz->esq == nullptr && D.raiz->dir == nullptr){
-        delete D.raiz;
+        free(D.raiz);
+        D.raiz = nullptr;
     }
     else {
         if (D.raiz->esq != nullptr)
@@ -76,13 +77,13 @@ Noh* rotacaoDireita(Noh *n){
     x->pai = n->pai;
     n->pai = x;
 
-    int nEsqH = n->esq != nullptr ? n->esq->h + 1 : 1;
-    int nDirH = n->dir != nullptr ? n->dir->h + 1 : 1;
-    n->h = max(nDirH, nEsqH);
+    int nEsqH = n->esq != nullptr ? n->esq->h  : 0;
+    int nDirH = n->dir != nullptr ? n->dir->h  : 0;
+    n->h = 1 + max(nDirH, nEsqH);
 
-    int xEsqH = x->esq != nullptr ? x->esq->h + 1 : 1;
-    int xDirH = x->dir != nullptr ? x->dir->h + 1 : 1;
-    x->h = max(xDirH, xEsqH);
+    int xEsqH = x->esq != nullptr ? x->esq->h : 0;
+    int xDirH = x->dir != nullptr ? x->dir->h : 0;
+    x->h = 1 + max(xDirH, xEsqH);
     return x;
 }
 
