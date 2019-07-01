@@ -1,8 +1,8 @@
 #include <iostream>
 #include <iomanip>
 #include <c++/cmath>
-#include "AvlTree.hpp"
-#include "AvlTree.cpp"
+#include "avl.hpp"
+#include "avl.cpp"
 
 int tamValor = 2;
 int distancia = 2;
@@ -56,38 +56,32 @@ int main() {
     DicAVL dictTest;
     Noh* no;
     Noh* no1;
+    Noh* no2;
+    Noh* no3;
+    Noh* no4;
 
     inicializar(dictTest);
-    no = inserir(dictTest, 1, 2);
+    no = inserir(dictTest, 12.75, -64.5);
     imprimirArvore(dictTest);
-    no1 = inserir(dictTest, 2, 1);
+    no1 = inserir(dictTest, -155.75, 59.5);
     imprimirArvore(dictTest);
-    no = inserir(dictTest, 3, 4);
+    no2 = inserir(dictTest, 139.5, 31);
     imprimirArvore(dictTest);
-    no = inserir(dictTest, 4, 3);
+    no3 = inserir(dictTest, 280.25, 27.5);
     imprimirArvore(dictTest);
-    no = inserir(dictTest, 5, 5);
-    imprimirArvore(dictTest);
-//    no = inserir(dictTest, 6, 48);
+//    no3 = inserir(dictTest, -133.25, 10.5);
 //    imprimirArvore(dictTest);
-//    no = inserir(dictTest, 7, 62);
-//    imprimirArvore(dictTest);
-//    no = inserir(dictTest, 8, 78);
-//    imprimirArvore(dictTest);
-//    no = inserir(dictTest, 9, 88);
-//    imprimirArvore(dictTest);
-//    no = inserir(dictTest, 10, 92);
-//    imprimirArvore(dictTest);
-//    no = inserir(dictTest, 10, 80);
-//    imprimirArvore(dictTest);
-//    no1 = inserir(dictTest, 10, 82);
-//    imprimirArvore(dictTest);
-//    no = inserir(dictTest, 10, 84);
-//    imprimirArvore(dictTest);
+//    no4 = inserir(dictTest, -133.28, 10.5);
 
-
-    remover(dictTest, no1);
+    remover(dictTest, no);
     imprimirArvore(dictTest);
+//    remover(dictTest, no1);
+//    imprimirArvore(dictTest);
+//    remover(dictTest, no3);
+//    imprimirArvore(dictTest);
+//    remover(dictTest, no);
+//    imprimirArvore(dictTest);
+    terminar(dictTest);
     std::cout << "" << std::endl;
     return 0;
 }

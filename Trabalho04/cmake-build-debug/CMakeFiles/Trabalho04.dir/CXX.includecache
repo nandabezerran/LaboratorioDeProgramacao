@@ -6,17 +6,19 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho04/AvlTree.cpp
+C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho04/avl.cpp
 stdio.h
 -
 stdlib.h
 -
 string
 -
-AvlTree.hpp
-C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho04/AvlTree.hpp
+iostream
+-
+avl.hpp
+C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho04/avl.hpp
 
-C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho04/AvlTree.hpp
+C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho04/avl.hpp
 
 C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho04/main.cpp
 iostream
@@ -25,8 +27,8 @@ iomanip
 -
 c++/cmath
 -
-AvlTree.hpp
-C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho04/AvlTree.hpp
-AvlTree.cpp
-C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho04/AvlTree.cpp
+avl.hpp
+C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho04/avl.hpp
+avl.cpp
+C:/Users/fbeze/OneDrive/Documentos/Faculdade/LaboratorioDeProgramacao/Trabalho04/avl.cpp
 
